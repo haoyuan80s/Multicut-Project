@@ -10,25 +10,6 @@ def get_weights(graph):
     return weighs
 
 
-def random_graph(n,p):
-    """Create Erdős–Rényi (ER) random graph(n,p)"""
-    graph_dict = {}
-    def random_list(n,p):
-        """Creat a list containing each number from 0 to n - 1 with probability p"""
-        l = []
-        for i in range(n):
-            if random.random() < p:
-                l.append(i)
-        return l
-
-    for i in range(n):
-    #     import pdb; pdb.set_trace()
-        l = random_list(n,p)
-        if i in l:
-            l.remove(i)
-        graph_dict[i] = l
-    return graph_dict
-
 
 """ 
 A Python Class
@@ -37,14 +18,15 @@ facts and functionalities of graphs.
 """
 
 class Graph(object):
-
-    def __init__(self, graph_dict=None):
+    def __init__(self, graph_dict = None, n = 0, p=0):
         """ initializes a graph object 
             If no dictionary or None is given, 
             an empty dictionary will be used
         """
+
         if graph_dict == None:
-            graph_dict = {}
+            import pdb; pdb.set_trace()
+            graph_dict = self.__gen_random_graph(n,p)
         self.__graph_dict = graph_dict
 
     def vertices(self):
@@ -74,7 +56,6 @@ class Graph(object):
             self.__graph_dict[vertex1].append(vertex2)
         else:
             self.__graph_dict[vertex1] = [vertex2]
-
     def __generate_edges(self):
         """ A static method generating the edges of the 
             graph "graph". Edges are represented as sets 
@@ -87,6 +68,24 @@ class Graph(object):
                 if {neighbour, vertex} not in edges:
                     edges.append((vertex, neighbour))
         return edges
+    
+    def __gen_random_graph(self, n,p):
+        """Create Erdős–Rényi (ER) random graph(n,p)"""
+        graph_dict = {}
+        def random_list(n,p):
+            """Creat a list containing each number from 0 to n - 1 with probability p"""
+            l = []
+            for i in range(n):
+                if random.random() < p:
+                    l.append(i)
+            return l
+
+        for i in range(n):
+            l = random_list(n,p)
+            if i in l:
+                l.remove(i)
+            graph_dict[i] = l
+        return graph_dict
 
     def __str__(self):
         res = "vertices: "
