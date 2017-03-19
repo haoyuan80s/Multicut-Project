@@ -1,0 +1,114 @@
+
+Gurobi 6.0.0 (linux64) logging started Sun Mar 19 13:48:42 2017
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [0e+00, 0e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 2
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 8 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0%
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [0e+00, 0e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 2
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 8 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0%
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [0e+00, 0e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 2
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 8 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0%
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [0e+00, 0e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 2
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 8 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0%
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [0e+00, 0e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 2
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 8 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.0 (linux64) logging started Sun Mar 19 14:13:20 2017
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [0e+00, 0e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 2
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 8 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0%
+
+Gurobi 6.0.0 (linux64) logging started Sun Mar 19 16:07:39 2017
+
+Optimize a model with 2 rows, 3 columns and 5 nonzeros
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+00]
+  Objective range [1e+00, 2e+00]
+  Bounds range    [0e+00, 0e+00]
+  RHS range       [1e+00, 4e+00]
+Found heuristic solution: objective 2
+Presolve removed 2 rows and 3 columns
+Presolve time: 0.00s
+
+Explored 0 nodes (0 simplex iterations) in 0.00 seconds
+Thread count was 1 (of 8 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 3.000000000000e+00, best bound 3.000000000000e+00, gap 0.0%
