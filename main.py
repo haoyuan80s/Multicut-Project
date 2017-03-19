@@ -9,33 +9,33 @@ graph = tools.Graph(n = 10,p = 0.3)
 edges_weights = tools.get_weights(graph)
 vertices = graph.vertices()
 
-from gurobipy import *
+# from gurobipy import *
 
-edges, weights = multidict(edges_wieghts)
+# edges, weights = multidict(edges_wieghts)
 
-try:
+# try:
 
-    # Create a new model
-    m = Model("mip")
+#     # Create a new model
+#     m = Model("mip")
 
-    # Create variables
-    is_cut = m.addVars(deges, vtype=GRB.BINARY)
-    is_member = m.addVars(vertices, vtype=GRB.BINARY)
+#     # Create variables
+#     is_cut = m.addVars(deges, vtype=GRB.BINARY)
+#     is_member = m.addVars(vertices, vtype=GRB.BINARY)
     
-    # Integrate new variables
-    m.update()
+#     # Integrate new variables
+#     m.update()
 
-    # Set objective
-    m.setObjective(is_cut.prod(weights), GRB.MAXIMIZE)
+#     # Set objective
+#     m.setObjective(is_cut.prod(weights), GRB.MAXIMIZE)
 
-    # Add constraints:
-    m.addConstr(is_member[0] == 1)
-    m.addConstr(is_member[9] == 0)
-    for e in edges:
-        u,v = e
-        m.addConstr(is_member[v] <= is_member[u] + is_cut[e])
+#     # Add constraints:
+#     m.addConstr(is_member[0] == 1)
+#     m.addConstr(is_member[9] == 0)
+#     for e in edges:
+#         u,v = e
+#         m.addConstr(is_member[v] <= is_member[u] + is_cut[e])
 
-    m.optimize()
+#     m.optimize()
 
-except GurobiError:
-    print('Error reported')
+# except GurobiError:
+#     print('Error reported')

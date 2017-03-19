@@ -70,7 +70,6 @@ class Graph(object):
         return edges
     
     def __gen_random_graph(self, n,p):
-        """Create Erdős–Rényi (ER) random graph(n,p)"""
         graph_dict = {}
         def random_list(n,p):
             """Creat a list containing each number from 0 to n - 1 with probability p"""
