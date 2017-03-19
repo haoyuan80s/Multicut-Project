@@ -14,7 +14,7 @@ def get_weights(graph):
 """ 
 A Python Class
 A simple Python graph class, demonstrating the essential 
-facts and functionalities of graphs.
+acts and functionalities of graphs.
 """
 
 class Graph(object):
@@ -25,7 +25,7 @@ class Graph(object):
         """
 
         if graph_dict == None:
-            import pdb; pdb.set_trace()
+            #import pdb; pdb.set_trace()
             graph_dict = self.__gen_random_graph(n,p)
         self.__graph_dict = graph_dict
 
