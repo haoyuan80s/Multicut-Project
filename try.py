@@ -1,45 +1,45 @@
-    #!/usr/bin/python
+#!/usr/bin/python
 
-    # Copyright 2014, Gurobi Optimization, Inc.
+# Copyright 2014, Gurobi Optimization, Inc.
 
-    # This example formulates and solves the following simple MIP model:
-    #  maximize
-    #        x +   y + 2 z
-    #  subject to
-    #        x + 2 y + 3 z <= 4
-    #        x +   y       >= 1
-    #  x, y, z binary
-for i in range(5):
-    from gurobipy import *
+# This example formulates and solves the following simple MIP model:
+#  maximize
+#        x +   y + 2 z
+#  subject to
+#        x + 2 y + 3 z <= 4
+#        x +   y       >= 1
+#  x, y, z binary
 
-    try:
+from gurobipy import *
 
-        # Create a new model
-        m = Model("mip1")
+try:
 
-        # Create variables
-        x = m.addVar(vtype=GRB.BINARY, name="x")
-        y = m.addVar(vtype=GRB.BINARY, name="y")
-        z = m.addVar(vtype=GRB.BINARY, name="z")
+    # Create a new model
+    m = Model("mip1")
 
-        # Integrate new variables
-        m.update()
+    # Create variables
+    x = m.addVar(vtype=GRB.BINARY, name="x")
+    y = m.addVar(vtype=GRB.BINARY, name="y")
+    z = m.addVar(vtype=GRB.BINARY, name="z")
+    
+    # Integrate new variables
+    m.update()
 
-        # Set objective
-        m.setObjective(x + y + 2 * z, GRB.MAXIMIZE)
+    # Set objective
+    m.setObjective(x + y + 2 * z, GRB.MAXIMIZE)
 
-        # Add constraint: x + 2 y + 3 z <= 4
-        m.addConstr(x + 2 * y + 3 * z <= 4, "c0")
+    # Add constraint: x + 2 y + 3 z <= 4
+    m.addConstr(x + 2 * y + 3 * z <= 4, "c0")
 
-        # Add constraint: x + y >= 1
-        m.addConstr(x + y >= 1, "c1")
+    # Add constraint: x + y >= 1
+    m.addConstr(x + y >= 1, "c1")
 
-        m.optimize()
+    m.optimize()
 
-        for v in m.getVars():
-            print('%s %g' % (v.varName, v.x))
+    for v in m.getVars():
+        print('%s %g' % (v.varName, v.x))
 
-        print('Obj: %g' % m.objVal)
+    print('Obj: %g' % m.objVal)
 
-    except GurobiError:
-        print('Error reported')
+except GurobiError:
+    print('Error reported')
