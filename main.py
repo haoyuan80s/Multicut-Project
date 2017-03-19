@@ -1,22 +1,41 @@
-import importlib
-import dongxi
-importlib.reload(dongxi)
-from dongxi import *
 
-from scipy.optimize import linprog
+import tools
+import importlib; importlib.reload(tools)
 
-# a random Graph with n vetexes
+# Collect data
 n = 10
 p = 0.3
+graph = tools.Graph(n = 10,p = 0.3)
+edges_weights = tools.get_weights(graph)
+vertices = graph.vertices()
 
-graph = Graph(n = 10,p = 0.3)
+from gurobipy import *
 
-print(graph)
+edges, weights = multidict(edges_wieghts)
 
-# c = [-1, 4]
-# A = [[-3, 1], [1, 2]]
-# b = [6, 4]
-# x0_bounds = (None, None)
-# x1_bounds = (-3, None)
-# res = linprog(c, A_ub=A, b_ub=b, bounds=(x0_bounds, x1_bounds), options={"disp": True})
-# print(res)
+try:
+
+    # Create a new model
+    m = Model("mip")
+
+    # Create variables
+    is_cut = m.addVars(deges, vtype=GRB.BINARY)
+    is_member = m.addVars(vertices, vtype=GRB.BINARY)
+    
+    # Integrate new variables
+    m.update()
+
+    # Set objective
+    m.setObjective(is_cut.prod(weights), GRB.MAXIMIZE)
+
+    # Add constraints:
+    m.addConstr(is_member[0] == 1)
+    m.addConstr(is_member[9] == 0)
+    for e in edges:
+        u,v = e
+        m.addConstr(is_member[v] <= is_member[u] + is_cut[e])
+
+    m.optimize()
+
+except GurobiError:
+    print('Error reported')
