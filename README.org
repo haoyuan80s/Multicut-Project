@@ -1,4 +1,4 @@
-#+TITLE Multicut-Project
+#+TITLE: Multicut-Project
 
 * General Plan
 
@@ -24,11 +24,11 @@ For testing the performance, we will evaluate on
 * A Small Scale Toy Example
 Run code step by step 
 1. Log into Caen.
-2. Input the follows to avaliable Gurobi
-    $ module available gurobi
-    $ module load gurobi
-3. The code below ask Gurobi solver to solve the naive IP problem. It is a Minimum cut problem cf. Sec 2.1 in notes Randomized Rounding.
-    $ gurobi.sh main.py  
+2. Input the follows to avaliable Gurobi \\
+    $ module available gurobi\\
+    $ module load gurobi\\
+3. The code below ask Gurobi solver to solve the naive IP problem. It is a Minimum cut problem cf. Sec 2.1 in notes Randomized Rounding.\\
+    $ gurobi.sh main.py
 
 * TODO Eliploid Method
 * TODO Large Scale Exmaple
