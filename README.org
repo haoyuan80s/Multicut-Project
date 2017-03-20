@@ -34,7 +34,7 @@ Run code step by step
 
     $ gurobi.sh main.py
 
-* TODO Eliploid Method.
-* TODO Large Scale Exmaple
-* TODO A Pritical Example
-* TODO Collet Results and Plot Beautiful Figurts
+* TODO Ellipsoid Method.
+* TODO Large Scale Examples
+* TODO A Practical Example
+* TODO Collect Results and Plot Beautiful Figures
