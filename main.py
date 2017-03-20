@@ -1,41 +1,60 @@
 
 import tools
-import importlib; importlib.reload(tools)
 
 # Collect data
-n = 10
+n = 20 # n = 300 works fine
 p = 0.3
-graph = tools.Graph(n = 10,p = 0.3)
+graph = tools.Graph(n = n,p = p)
 edges_weights = tools.get_weights(graph)
 vertices = graph.vertices()
 
-# from gurobipy import *
+#print(len(edges_weights)) # size of our problem
 
-# edges, weights = multidict(edges_wieghts)
 
-# try:
 
-#     # Create a new model
-#     m = Model("mip")
+from gurobipy import *
 
-#     # Create variables
-#     is_cut = m.addVars(deges, vtype=GRB.BINARY)
-#     is_member = m.addVars(vertices, vtype=GRB.BINARY)
+edges, weights = multidict(edges_weights)
+
+
+# Create a new model
+m = Model("mip")
+
+# Create variables
+cuts = {} 
+for e in edges:
+    cuts[e] = m.addVar(vtype = GRB.BINARY) # if we cut edge e
+members = {}
+for v in vertices:
+    members[v] = m.addVar(vtype = GRB.BINARY) # if we choose vertex v in our set S
     
-#     # Integrate new variables
-#     m.update()
+# Integrate new variables
+m.update()
 
-#     # Set objective
-#     m.setObjective(is_cut.prod(weights), GRB.MAXIMIZE)
+# Set objective
+m.setObjective(sum(cuts[e]*weights[e] for e in edges), GRB.MINIMIZE) # minimize cut-cost
 
-#     # Add constraints:
-#     m.addConstr(is_member[0] == 1)
-#     m.addConstr(is_member[9] == 0)
-#     for e in edges:
-#         u,v = e
-#         m.addConstr(is_member[v] <= is_member[u] + is_cut[e])
+# Add constraints:
+m.addConstr(members[1] == 1)
+m.addConstr(members[0] == 0)
+for e in edges:
+    u,v = e
+    m.addConstr(members[v] <= members[u] + cuts[e])
 
-#     m.optimize()
+# optimize it
+m.optimize()
 
-# except GurobiError:
-#     print('Error reported')
+# display results
+def printSolution():
+    if m.status == GRB.Status.OPTIMAL:
+        print('\nCost: %g' % m.objVal)
+        #buyx = m.getAttr('x', buy)
+        #nutritionx = m.getAttr('x', nutrition)
+        print('\nCut:')
+        for e in edges:
+            print(e, cuts[e].x)
+    else:
+        print('No solution')
+
+printSolution()
+
