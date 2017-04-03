@@ -1,12 +1,13 @@
 """Contains tookits for solving the Multicut Problems"""
-
-import random
+import random; random.seed(1)
 
 def get_weights(graph):
     """Associates a random weight to each edges of a graph"""
     weighs = {}
-    for e in graph.edges():
-        weighs[e] = random.random()
+    for u,v in graph.edges():
+        if u < v:
+            weighs[(u,v)] = random.random()
+#        import pdb; pdb.set_trace()
     return weighs
 
 
@@ -71,20 +72,39 @@ class Graph(object):
     
     def __gen_random_graph(self, n,p):
         graph_dict = {}
-        def random_list(n,p):
-            """Creat a list containing each number from 0 to n - 1 with probability p"""
+        def random_list(k):
+            """Creat a list containing each number from k to n - 1 with probability p"""
             l = []
-            for i in range(n):
+            for i in range(k,n):
                 if random.random() < p:
                     l.append(i)
             return l
 
         for i in range(n):
-            l = random_list(n,p)
-            if i in l:
-                l.remove(i)
+            l = []
+            if i <= n - 2:
+                l = random_list(i+1)
+            for j in range(i):
+                if i in graph_dict[j]:
+                    l.append(j)
             graph_dict[i] = l
         return graph_dict
+    
+    def find_all_paths(self, start_vertex, end_vertex, path=[]):
+        """ find all paths from start_vertex to end_vertex in graph """
+        graph = self.__graph_dict 
+        path = path + [start_vertex]
+        if start_vertex == end_vertex:
+            return [path]
+        if start_vertex not in graph:
+            return []
+        paths = []
+        for vertex in graph[start_vertex]:
+            if vertex not in path:
+                extended_paths = self.find_all_paths(vertex, end_vertex, path)
+                for p in extended_paths: 
+                    paths.append(p)
+        return paths
 
     def __str__(self):
         res = "vertices: "
