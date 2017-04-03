@@ -1,5 +1,9 @@
 #+TITLE: Multicut-Project                                                                                                                                                         
-
+* Codes:
+** multi_cut_naive.py
+Implements the multi-cut IP algorithm naively.(cf. text book 8.3)
+** multi_cut_compact.py
+Implements the LP relaxation with compact LP formulation.
 * General Plan
 
 For small-sized problem, we will consider the accuracy of the approximation algorithm.
