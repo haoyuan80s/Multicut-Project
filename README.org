@@ -33,8 +33,13 @@ Run code step by step
 3. The code below ask Gurobi solver to solve the naive IP problem. It is a Minimum cut problem cf. Sec 2.1 in notes Randomized Rounding.
 
     $ gurobi.sh main.py
+* Ellipsoid Method.
+The native LP relaxation has exponentially many constrains. 
+It can be solved in polynomial time base on ellipsoid method 
+with polynomial time separation method. 
 
-* TODO Ellipsoid Method.
+* A Compact Formulat
+By introducing "distance", the LP can be modified such that it has polynomial constrains.
 * TODO Large Scale Examples
 * TODO A Practical Example
 * TODO Collect Results and Plot Beautiful Figures
