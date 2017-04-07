@@ -2,17 +2,7 @@ import tools
 from itertools import *
 from gurobipy import *
 
-# Collect data
-n = 40 # num of vertices
-p = 0.4 # prob of (i,j) \in E
-k = 10 # number of pairs
-graph = tools.Graph(n = n, p = p)
-edges_weights = tools.get_weights(graph)
-#G = {0: [2,4], 1: [2,3], 2:[0,1,5], 3: [1,4,5], 4: [0,5,3], 5: [2,3,4]}
-#graph = tools.Graph(G)
-#edges_weights = {(1, 2): 0.5, (1, 3): 0.5, (4,5): 0.25, (0, 4): 0.25, (2, 5): 0.5, (3, 4): 0.25, (0,2): 0.5, (3, 5):0.5 }
-vertices = graph.vertices()
-edges, weights = multidict(edges_weights)
+
 
 # Create a new model
 m = Model("muticut")

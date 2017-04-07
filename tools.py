@@ -1,43 +1,22 @@
 """Contains tookits for solving the Multicut Problems"""
-import random; random.seed(1)
-
-def get_weights(graph):
-    """Associates a random weight to each edges of a graph"""
-    weighs = {}
-    for u,v in graph.edges():
-        if u < v:
-            weighs[(u,v)] = random.random()
-#        import pdb; pdb.set_trace()
-    return weighs
-
-
-
-""" 
-A Python Class
-A simple Python graph class, demonstrating the essential 
-acts and functionalities of graphs.
-"""
+import random; #random.seed(1)
 
 class Graph(object):
-    def __init__(self, graph_dict = None, n = 0, p=0):
-        """ initializes a graph object 
-            If no dictionary or None is given, 
-            an empty dictionary will be used
+    def __init__(self, graph_dict = None, n = 0, p=0, weights = None):
+        """ 
+            weights needs to be consistent with edge of graph_dict
         """
-
-        if graph_dict == None:
-            #import pdb; pdb.set_trace()
-            graph_dict = self.__gen_random_graph(n,p)
-        self.__graph_dict = graph_dict
-
+        self.__graph_dict = self.__gen_random_graph(n,p) if graph_dict == None else graph_dict
+        self.__weights = self.__get_rand_weights() if weights == None else weights
+            
     def vertices(self):
         """ returns the vertices of a graph """
         return list(self.__graph_dict.keys())
-
     def edges(self):
         """ returns the edges of a graph """
         return self.__generate_edges()
-
+    def weights(self):
+        return self.__weights
     def add_vertex(self, vertex):
         """ If the vertex "vertex" is not in 
             self.__graph_dict, a key "vertex" with an empty
@@ -57,6 +36,15 @@ class Graph(object):
             self.__graph_dict[vertex1].append(vertex2)
         else:
             self.__graph_dict[vertex1] = [vertex2]
+    
+    def __get_rand_weights(self):
+        """Associates a random weight to each edges of a graph"""
+        weighs = {}
+        for u,v in self.edges():
+            if u < v:
+                weighs[(u,v)] = random.random()
+        return weighs
+
     def __generate_edges(self):
         """ A static method generating the edges of the 
             graph "graph". Edges are represented as sets 
