@@ -36,13 +36,22 @@ class Graph(object):
             self.__graph_dict[vertex1].append(vertex2)
         else:
             self.__graph_dict[vertex1] = [vertex2]
+
+    def remove_edges(self, edges):
+        """ assumes that edge is of type set, tuple or list; 
+            between two vertices can be multiple edges! 
+        """
+        for u,v in edges:
+            self.__graph_dict[u].remove(v)
+            self.__graph_dict[v].remove(u)
+    
+    
     
     def __get_rand_weights(self):
         """Associates a random weight to each edges of a graph"""
         weighs = {}
         for u,v in self.edges():
-            if u < v:
-                weighs[(u,v)] = random.random()
+            weighs[(u,v)] = random.random()
         return weighs
 
     def __generate_edges(self):
@@ -54,7 +63,7 @@ class Graph(object):
         edges = []
         for vertex in self.__graph_dict:
             for neighbour in self.__graph_dict[vertex]:
-                if {neighbour, vertex} not in edges:
+                if {neighbour, vertex} not in edges and vertex > neighbour:
                     edges.append((vertex, neighbour))
         return edges
     
@@ -93,7 +102,25 @@ class Graph(object):
                 for p in extended_paths: 
                     paths.append(p)
         return paths
-
+    
+    def is_connected(self, start_vertex, end_vertex):
+        """ find all paths from start_vertex to 
+            end_vertex in graph """
+        visited = []
+        def help(start_vertex, end_vertex):
+            graph = self.__graph_dict
+            visited.append(start_vertex)
+            if start_vertex == end_vertex:
+                return True
+            for vertex in graph[start_vertex]:
+                if vertex not in visited:
+                    if help(vertex, end_vertex):
+                        return True
+            return False
+        return help(start_vertex, end_vertex)
+    
+    
+    
     def __str__(self):
         res = "vertices: "
         for k in self.__graph_dict:
