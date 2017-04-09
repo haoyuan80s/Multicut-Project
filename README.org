@@ -2,8 +2,13 @@
 * Codes:
 ** multi_cut_naive.py
 Implements the multi-cut IP algorithm naively.(cf. text book 8.3)
-** multi_cut_compact.py
+** LP_relax.py
 Implements the LP relaxation with compact LP formulation.
+** region_growing.py
+Implements the region_growing alg as in approximation book sec 8.3
+** main.py
+Creats several examples and runing different algorithms on it, (should add figures)
+
 * General Plan
 
 For small-sized problem, we will consider the accuracy of the approximation algorithm.
@@ -37,13 +42,15 @@ Run code step by step
 3. The code below ask Gurobi solver to solve the naive IP problem. It is a Minimum cut problem cf. Sec 2.1 in notes Randomized Rounding.
 
     $ gurobi.sh main.py
-* Ellipsoid Method.
+* TODO Ellipsoid Method.
 The native LP relaxation has exponentially many constrains. 
 It can be solved in polynomial time base on ellipsoid method 
 with polynomial time separation method. 
 
 * A Compact Formulat
 By introducing "distance", the LP can be modified such that it has polynomial constrains.
+* Region Growing Alg
+cf. Approx alg book section 8.3
 * TODO Large Scale Examples
 * TODO A Practical Example
 * TODO Collect Results and Plot Beautiful Figures
