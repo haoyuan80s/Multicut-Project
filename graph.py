@@ -2,13 +2,18 @@
 import random; #random.seed(1)
 
 class Graph(object):
-    def __init__(self, graph_dict = None, n = 0, p=0, weights = None):
+    def __init__(self, graph_dict = None, n = 0, p=0, weights = None, st = []):
         """ 
             weights needs to be consistent with edge of graph_dict
         """
+        
+        self.__st = st
         self.__graph_dict = self.__gen_random_graph(n,p) if graph_dict == None else graph_dict
         self.__weights = self.__get_rand_weights() if weights == None else weights
-            
+    
+    def sts(self):
+        """return soure_terminal pairs"""
+        return self.__st
     def vertices(self):
         """ returns the vertices of a graph """
         return list(self.__graph_dict.keys())
@@ -63,7 +68,7 @@ class Graph(object):
         edges = []
         for vertex in self.__graph_dict:
             for neighbour in self.__graph_dict[vertex]:
-                if {neighbour, vertex} not in edges and vertex > neighbour:
+                if {neighbour, vertex} not in edges and vertex < neighbour:
                     edges.append((vertex, neighbour))
         return edges
     
