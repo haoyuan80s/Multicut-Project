@@ -2,56 +2,78 @@ import graph
 import LP_relax as LP
 import random
 
-def region_growing(G):
-    """return the cuts F following the region_growing alg in sec 8.2 approx book"""
-    d = LP.multi_cut_LP_relax(G)
-    def dist(u,v):
-        """return d-incuded-distance between u,v"""
+import math
+# requires an networkx Graph G
+def region_growing(G,d,st_pairs):
+    L = sum([c[e]*x[e] for e in G.edges()])
+    beta = 1.0/len(st_pairs)
+    
+    # k = 2
+    # G = graph.Graph(n = 4, p = 1)
+    def dist(u,v): # the inputs are two vertices
         if u == v: 
             return 0
         else:
-            return d[( min(u,v),max(u,v) )]
+            try:
+                return d[(u,v)]
+            except:
+                return d[(v,u)]
 
     def ball(s,r):
-        """return vertices in ball(s,r)"""
-        return [x for x in G.vertices() if dist(x,s) <= r]
+        return [x for x in G.nodes() if dist(x,s) <= r]
+    
+    def is_boundary(e,B):
+        # check if an e is in the boundary of a set b or not
+        # otherwise, return None
+        (u,v) = e
+        return (u in b and v not in B) or (v in b and u not in B)
+
+    def get_node_in_set(e,B):
+        if is_boundary(e,B) == False:
+            raise
+        (u,v) = e
+        if (u in b and v not in B):
+            return u
+        return v
+
+
+    def is_internal(e,B):
+        # check if e is internal to b
+        (u,v) = e
+        return (u in B and v in B)
 
     def boundary(s,r):
-        """return boundary edges in ball(s,t)"""
         delta = []
         b = ball(s,r)
-        for u,v in G.edges():
-            if (u in b and v not in b) or (v in b and u not in b):
-                delta.append((u,v))
+        for e in G.edges():
+            if is_boundary(e,b):
+                delta.append(e)
         return delta
-
-    def discretize_r():
-        """return possive critical r values where F may change"""
-#        import pdb; pdb.set_trace()
-        rs = []
-        for s,t in G.sts():
-            for v in G.vertices():
-                d = dist(s,v)
-                if d not in rs and d < 1.0/2:
-                   rs.append(d)
-        rs.sort()
-        return rs
     
-    def get_F(r):
-        """return F(r) c.f. alg 8.2 in approx alg book"""
-        F = []
-        for s,t in G.sts():
-            if G.is_connected(s, t):
-                B = boundary(s,r)
-                F = F + B
-                G.remove_edges(B)
-        return F
+    def volume(s,r):
+        B = ball(s,r)
+        return (beta*L
+                +sum([c[e]*x[e] for e in G.edges() 
+                    if is_internal(e,B)])
+                +sum([c[e]*(r-dist(s,get_node_in_set(e,B))) for e in G.edges() 
+                    if is_boundary(e,B)])
+                )
+    def cost(B):
+        return sum([c[e] for e in B])
 
-    # return the smallest F(r)
-    F = G.edges()
-    for r in discretize_r():
-        FF = get_F(r)
-        if len(FF) < len(F): 
-            F = FF
-
+    F = []
+    for s,t in st_pairs:
+        if nx.has_path(G, s, t): #2*i is soure_i
+            print "called"
+            r = 0
+            for r_try in set(d.values()):
+                if cost(boundary(s,r)) <= volume(s,r)*2*math.log((beta+1)/beta):
+                    r = r_try
+                    break
+                
+            B = boundary(s,r)
+            #import pdb; pdb.set_trace()
+            F = F + B
+            G.remove_edges_from(B)
     return F
+

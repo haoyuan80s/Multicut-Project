@@ -52,6 +52,7 @@ class Graph(object):
         if vertex2 not in self.__graph_dict.keys():
             self.__graph_dict[vertex2] = []
         self.__weights[(vertex1,vertex2)] = weight
+        self.__weights[(vertex2,vertex1)] = weight
             
     def add_st(self, st):
         """ Adds an s-t pair to the graph, where st is a vertex tuple. If either vertex does not
@@ -77,16 +78,15 @@ class Graph(object):
     
     def __get_rand_weights(self):
         """Associates a random weight to each edges of a graph"""
-        weighs = {}
+        weights = {}
         for u,v in self.edges():
-            weighs[(u,v)] = random.random()
-        return weighs
+            weights[(u,v)] = random.random()
+            weights[(v,u)] = weights[(u,v)]
+        return weights
 
     def __generate_edges(self):
         """ A static method generating the edges of the 
-            graph "graph". Edges are represented as sets 
-            with one (a loop back to the vertex) or two 
-            vertices 
+            graph "graph". Edges are represented as tuples of vertices
         """
         edges = []
         idx_of = dict()
