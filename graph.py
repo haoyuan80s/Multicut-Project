@@ -1,43 +1,32 @@
 """Contains tookits for solving the Multicut Problems"""
-import random; random.seed(1)
-
-def get_weights(graph):
-    """Associates a random weight to each edges of a graph"""
-    weighs = {}
-    for u,v in graph.edges():
-        if u < v:
-            weighs[(u,v)] = random.random()
-#        import pdb; pdb.set_trace()
-    return weighs
-
-
-
-""" 
-A Python Class
-A simple Python graph class, demonstrating the essential 
-acts and functionalities of graphs.
-"""
+import random; #random.seed(1)
 
 class Graph(object):
-    def __init__(self, graph_dict = None, n = 0, p=0):
-        """ initializes a graph object 
-            If no dictionary or None is given, 
-            an empty dictionary will be used
+    def __init__(self, graph_dict = None, n = 0, p=0, weights = None, st = []):
+        """ 
+            weights needs to be consistent with edge of graph_dict
         """
-
-        if graph_dict == None:
-            #import pdb; pdb.set_trace()
-            graph_dict = self.__gen_random_graph(n,p)
-        self.__graph_dict = graph_dict
-
+        
+        self.__st = st
+        self.__graph_dict = self.__gen_random_graph(n,p) if graph_dict == None else graph_dict
+        if weights == None:
+            self.__weights = {} 
+            for e in self.edges():
+                self.__weights[e] = 1
+        if weights == "random":
+            self.__weights = self.__get_rand_weights() if weights == None else weights
+        
+    def sts(self):
+        """return soure_terminal pairs"""
+        return self.__st
     def vertices(self):
         """ returns the vertices of a graph """
         return list(self.__graph_dict.keys())
-
     def edges(self):
         """ returns the edges of a graph """
         return self.__generate_edges()
-
+    def weights(self):
+        return self.__weights
     def add_vertex(self, vertex):
         """ If the vertex "vertex" is not in 
             self.__graph_dict, a key "vertex" with an empty
@@ -57,6 +46,24 @@ class Graph(object):
             self.__graph_dict[vertex1].append(vertex2)
         else:
             self.__graph_dict[vertex1] = [vertex2]
+
+    def remove_edges(self, edges):
+        """ assumes that edge is of type set, tuple or list; 
+            between two vertices can be multiple edges! 
+        """
+        for u,v in edges:
+            self.__graph_dict[u].remove(v)
+            self.__graph_dict[v].remove(u)
+    
+    
+    
+    def __get_rand_weights(self):
+        """Associates a random weight to each edges of a graph"""
+        weighs = {}
+        for u,v in self.edges():
+            weighs[(u,v)] = random.random()
+        return weighs
+
     def __generate_edges(self):
         """ A static method generating the edges of the 
             graph "graph". Edges are represented as sets 
@@ -66,7 +73,7 @@ class Graph(object):
         edges = []
         for vertex in self.__graph_dict:
             for neighbour in self.__graph_dict[vertex]:
-                if {neighbour, vertex} not in edges:
+                if {neighbour, vertex} not in edges and vertex < neighbour:
                     edges.append((vertex, neighbour))
         return edges
     
@@ -105,7 +112,25 @@ class Graph(object):
                 for p in extended_paths: 
                     paths.append(p)
         return paths
-
+    
+    def is_connected(self, start_vertex, end_vertex):
+        """ find all paths from start_vertex to 
+            end_vertex in graph """
+        visited = []
+        def help(start_vertex, end_vertex):
+            graph = self.__graph_dict
+            visited.append(start_vertex)
+            if start_vertex == end_vertex:
+                return True
+            for vertex in graph[start_vertex]:
+                if vertex not in visited:
+                    if help(vertex, end_vertex):
+                        return True
+            return False
+        return help(start_vertex, end_vertex)
+    
+    
+    
     def __str__(self):
         res = "vertices: "
         for k in self.__graph_dict:
