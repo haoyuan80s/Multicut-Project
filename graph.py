@@ -9,8 +9,13 @@ class Graph(object):
         
         self.__st = st
         self.__graph_dict = self.__gen_random_graph(n,p) if graph_dict == None else graph_dict
-        self.__weights = self.__get_rand_weights() if weights == None else weights
-    
+        if weights == None:
+            self.__weights = {} 
+            for e in self.edges():
+                self.__weights[e] = 1
+        if weights == "random":
+            self.__weights = self.__get_rand_weights() if weights == None else weights
+        
     def sts(self):
         """return soure_terminal pairs"""
         return self.__st

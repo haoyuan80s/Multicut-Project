@@ -19,6 +19,9 @@ def multi_cut_LP_relax(g):
         cuts[e] = m.addVar(vtype=GRB.CONTINUOUS) # cuting edge e; >=0 by default
     dist = {}
     for e in combinations(vertices,2):
+        l = list(e); l.sort(); e = tuple(l)
+        u,v = e
+        if u>v: import pdb; pdb.set_trace()
         dist[e] = m.addVar() # add distance variable
     # Integrate new variables
     m.update()
@@ -27,7 +30,11 @@ def multi_cut_LP_relax(g):
     # Add constraints: WLOG source-sink pairs are (0,1),(2,3) ....
     for u,v in g.sts():
         m.addConstr( dist[(u , v)] >= 1  )
-    for u,v,w in combinations(vertices,3):
+    count = 0
+    for e in combinations(vertices,3):
+        l = list(e); l.sort(); u,v,w = l
+        count += 1
+        if count % 10000 == 0: print count
         m.addConstr(dist[(u,v)] + dist[(v,w)] >= dist[(u,w)])
         m.addConstr(dist[(u,w)] + dist[(v,w)] >= dist[(u,v)])
         m.addConstr(dist[(u,v)] + dist[(u,w)] >= dist[(v,w)])
@@ -37,7 +44,9 @@ def multi_cut_LP_relax(g):
     m.optimize()
     d = {}
     for e in combinations(vertices,2):
+        l = list(e); l.sort(); e = tuple(l)
         d[e] = dist[e].x # add distance variable
+        if dist[e].x > 0.01: print e,d[e]
     return d
     # display results
     
