@@ -5,8 +5,7 @@ class Graph(object):
     def __init__(self, graph_dict = None, n = 0, p=0, weights = None, st = []):
         """ 
             weights needs to be consistent with edge of graph_dict
-        """
-        
+        """        
         self.__st = st
         self.__graph_dict = self.__gen_random_graph(n,p) if graph_dict == None else graph_dict
         if weights == None:

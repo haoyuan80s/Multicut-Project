@@ -33,31 +33,27 @@ def multi_cut_LP_relax(g):
         m.addConstr( dist[(u , v)] >= 1  )
     for s in vertices:
         for u,v in edges:
-            dist[(min(s,v),max(s,v))] <= dist[min(s,u),max(s,u)] + cuts[(u,v)]
+            m.addConstr(dist[(min(s,v),max(s,v))] <= dist[min(s,u),max(s,u)] + cuts[(u,v)])
+            m.addConstr(dist[(min(s,u),max(s,u))] <= dist[min(s,v),max(s,v)] + cuts[(u,v)])
     for e in edges:
         m.addConstr(dist[e] == cuts[e])
     for u in vertices:
         m.addConstr(dist[(u,u)] == 0)
-    for e in combinations(vertices,3):
-        l = list(e); l.sort(); u,v,w = l
-        m.addConstr(dist[(u,v)] + dist[(v,w)] >= dist[(u,w)])
-        m.addConstr(dist[(u,w)] + dist[(v,w)] >= dist[(u,v)])
-        m.addConstr(dist[(u,v)] + dist[(u,w)] >= dist[(v,w)])
- 
-
+    
     # optimize it
     m.optimize()
     d = {}
     
-    #for e in edges:
-    #    print e, cuts[e].x
+    for e in edges:
+        if cuts[e].x > 0.001:
+            print "edge:", e, cuts[e].x
 
     #print "asdfdsf"
     for e in combinations(vertices,2):
         l = list(e); l.sort(); se = tuple(l)
         d[se] = dist[se].x # add distance variable
-        #if dist[e].x > 0.01:
-     #   print e,d[e]
+        if dist[e].x > 0.01:
+            print "dist:",e,d[e]
     return d
     # display results
     
