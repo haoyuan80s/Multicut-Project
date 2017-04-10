@@ -21,10 +21,10 @@ G = graph.Graph(n = 13, p = 0.3,st = [(0,1),(1,3)])
 
 #IP_sol = na.multi_cut_native(G)
 #print IP_sol
-LP_sol =  LP2.multi_cut_LP_relax(G)
-print LP_sol 
-#LP_sol1 =  LP.multi_cut_LP_relax(G)
-#print LP_sol1
+#LP_sol =  LP2.multi_cut_LP_relax(G)
+#print LP_sol 
+LP_sol1 =  LP.multi_cut_LP_relax(G)
+print LP_sol1
 #print rg.region_growing(G)
 #print na.multi_cut_native(G)
 #G.add_edge((0, 3))
