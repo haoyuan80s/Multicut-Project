@@ -45,7 +45,7 @@ class Graph(object):
             self.__graph_dict[v1].append(v2)
         else:
             self.__graph_dict[v1] = [v2]
-        if vertex2 in self.__graph_dict.keys():
+        if v2 in self.__graph_dict.keys():
             self.__graph_dict[v2].append(v1)
         else:
             self.__graph_dict[v2] = [v1]
