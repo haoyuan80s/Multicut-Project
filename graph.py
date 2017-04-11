@@ -39,21 +39,18 @@ class Graph(object):
         """ assumes that edge is of type set, tuple or list; 
             between two vertices can be multiple edges! 
         """
-        edge = set(edge)
-        (vertex1, vertex2) = tuple(edge)
-        if vertex1 in self.__graph_dict:
-            self.__graph_dict[vertex1].append(vertex2)
+        edge = frozenset(edge)
+        (v1, v2) = tuple(edge)
+        if v1 in self.__graph_dict:
+            self.__graph_dict[v1].append(v2)
         else:
-            self.__graph_dict[vertex1] = [vertex2]
+            self.__graph_dict[v1] = [v2]
         if vertex2 in self.__graph_dict.keys():
-            self.__graph_dict[vertex2].append(vertex1)
+            self.__graph_dict[v2].append(v1)
         else:
-            self.__graph_dict[vertex2] = [vertex1]
+            self.__graph_dict[v2] = [v1]
             
-        if vertex2 not in self.__graph_dict.keys():
-            self.__graph_dict[vertex2] = []
-        self.__weights[(vertex1,vertex2)] = weight
-        self.__weights[(vertex2,vertex1)] = weight
+        self.__weights[edge] = weight
             
     def add_st(self, st):
         """ Adds an s-t pair to the graph, where st is a vertex tuple. If either vertex does not
@@ -72,7 +69,7 @@ class Graph(object):
         for u,v in edges:
             self.__graph_dict[u].remove(v)
             self.__graph_dict[v].remove(u)
-    
+            self.__weights.remove(frozenset([u,v]))
     
     def dist_from(self, u):
         """ returns a dictionary mapping vertices v to their distance d(u,v) from vertex u """
@@ -88,7 +85,7 @@ class Graph(object):
         curr = u
         while len(unvisited) > 0:
             for v in self.__graph_dict[curr]:
-                d[v] = min(d[v], d[curr] + w[(curr,v)])
+                d[v] = min(d[v], d[curr] + w[frozenset([curr,v])])
             unvisited.remove(curr)
             curr = None
             for v in unvisited:
@@ -107,8 +104,8 @@ class Graph(object):
     def __get_rand_weights(self):
         """Associates a random weight to each edges of a graph"""
         weighs = {}
-        for u,v in self.edges():
-            weighs[(u,v)] = random.random()
+        for e in self.edges():
+            weighs[e] = random.random()
         return weighs
 
     def __generate_edges(self):
@@ -127,7 +124,7 @@ class Graph(object):
     def __gen_random_graph(self, n,p):
         graph_dict = {}
         def random_list(k):
-            """Creat a list containing each number from k to n - 1 with probability p"""
+            """Create a list containing each number from k to n - 1 with probability p"""
             l = []
             for i in range(k,n):
                 if random.random() < p:
@@ -175,9 +172,7 @@ class Graph(object):
                         return True
             return False
         return help(start_vertex, end_vertex)
-    
-    
-    
+        
     def __str__(self):
         res = "vertices: "
         for k in self.__graph_dict:
@@ -186,3 +181,53 @@ class Graph(object):
         for edge in self.__generate_edges():
             res += str(edge) + " "
         return res
+    
+    def to_csv(self, fname):
+        """ Writes vertex names to 'fname.vtx', adjacency list to 'fname.adj', and source/target pairs to 'fname.stp'. """
+        graph = self.__graph_dict
+        weights = self.__weights
+        st = self.__st
+        
+        idx_of = dict()
+        vf = ""
+        for (i,v) in enumerate(graph.keys()):
+            idx_of[v] = i
+            vf = vf + str(v) + "\n"
+        vf = vf[:-1]
+        print(vf)
+        
+        ef = ""
+        for v in graph.keys():
+            for u in graph[v]:
+                ef = ef + str(idx_of[v]) + "," + str(idx_of[u]) + "," + str(weights[(v,u)]) + "\n"
+        ef = ef[:-1]
+        print(ef)
+        
+        stf = ""
+        for s,t in st:
+            stf = stf + str(idx_of[s]) + "," + str(idx_of[t]) + "\n"
+        stf = stf[:-1]
+        print(stf)
+        
+        with open(fname + ".adj", 'w') as f:
+            f.write(ef)
+        with open(fname + ".vtx", 'w') as f:
+            f.write(vf)
+        with open(fname + ".stp", 'w') as f:
+            f.write(stf)
+    
+    
+def from_csv(fname):
+    """ creates Graph object from 'fname.adj' and 'fname.stp'. Interpreting the vertex names file
+        from to_csv is difficult because of Python typing so it's not supported. """
+    G = Graph()
+    with open(fname + ".adj", 'r') as f:
+        for line in f:
+            tokens = line.split(',')
+            G.add_edge((int(tokens[0]), int(tokens[1])), float(tokens[2]))
+            print("adding (" + tokens[0] + "," + tokens[1] + ")")
+    with open(fname + ".stp", 'r') as f:
+        for line in f:
+            tokens = line.split(',')
+            G.add_st((int(tokens[0]), int(tokens[1])))
+    return G
