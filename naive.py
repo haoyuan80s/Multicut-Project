@@ -12,6 +12,7 @@ def multi_cut_native(g):
     # Create variables
     cuts = {} 
     for e in edges:
+        e = frozenset(e)
         cuts[e] = m.addVar(vtype = GRB.BINARY) # if we cut edge e
 
     # Integrate new variables
@@ -23,7 +24,7 @@ def multi_cut_native(g):
     # Add constraints:
     for s,t in g.sts():
         for P in g.find_all_paths(s,t):
-            m.addConstr( sum( [ cuts[(min(P[j],P[j+1]), max(P[j],P[j+1]) )] for j in range(len(P) - 1)] ) >= 1 )
+            m.addConstr( sum([ cuts[frozenset([P[j],P[j+1]])] for j in range(len(P) - 1)] ) >= 1 )
 
     # optimize it
     m.optimize()

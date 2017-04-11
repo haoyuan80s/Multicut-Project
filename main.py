@@ -1,8 +1,8 @@
-import pickle
+#import pickle
 import graph
 import LP_relax as LP
 import LP_relax_v2 as LP2
-import region_growing as rg
+#import region_growing as rg
 import naive as na
 import random; random.seed(1)
 
@@ -19,10 +19,10 @@ G = graph.Graph(n = 13, p = 0.3,st = [(0,1),(1,3)])
 #g_dic = pickle.load(pickle_in)
 #G = graph.Graph(graph_dict = g_dic, st = [(525, 528),(526, 549)])
 
-#IP_sol = na.multi_cut_native(G)
-#print IP_sol
-#LP_sol =  LP2.multi_cut_LP_relax(G)
-#print LP_sol 
+IP_sol = na.multi_cut_native(G)
+print IP_sol
+LP_sol =  LP2.multi_cut_LP_relax(G)
+print LP_sol 
 LP_sol1 =  LP.multi_cut_LP_relax(G)
 print LP_sol1
 #print rg.region_growing(G)

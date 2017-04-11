@@ -20,41 +20,35 @@ def multi_cut_LP_relax(g):
         cuts[e] = m.addVar(vtype=GRB.CONTINUOUS) # cuting edge e; >=0 by default
     dist = {}
     for u in vertices:
-        dist[(u,u)] = m.addVar(vtype=GRB.CONTINUOUS)
+        dist[frozenset([u])] = m.addVar(vtype=GRB.CONTINUOUS)
     for e in combinations(vertices,2):
-        l = list(e); l.sort(); se = tuple(l)
-        dist[se] = m.addVar(vtype=GRB.CONTINUOUS) # add distance variable
+        e = frozenset(e)
+        dist[e] = m.addVar(vtype=GRB.CONTINUOUS) # add distance variable
     # Integrate new variables
     m.update()
     # Set objective
     m.setObjective(sum([cuts[e]*weights[e] for e in edges]), GRB.MINIMIZE) # minimize cut-cost
     # Add constraints: WLOG source-sink pairs are (0,1),(2,3) ....
     for u,v in sts:
-        m.addConstr( dist[(u , v)] >= 1  )
+        uv = frozenset([u,v])
+        m.addConstr( dist[uv] >= 1  )
     for s in vertices:
         for u,v in edges:
-            m.addConstr(dist[(min(s,v),max(s,v))] <= dist[min(s,u),max(s,u)] + cuts[(u,v)])
-            m.addConstr(dist[(min(s,u),max(s,u))] <= dist[min(s,v),max(s,v)] + cuts[(u,v)])
+            m.addConstr( dist[frozenset([u,s])] <= dist[frozenset([v,s])] + cuts[frozenset([u,v])] )
+            m.addConstr( dist[frozenset([v,s])] <= dist[frozenset([u,s])] + cuts[frozenset([u,v])] )
     for e in edges:
         m.addConstr(dist[e] == cuts[e])
     for u in vertices:
-        m.addConstr(dist[(u,u)] == 0)
+        u = frozenset([u])
+        m.addConstr(dist[u] == 0)
     
     # optimize it
     m.optimize()
-    d = {}
-    
+    x = {}
     for e in edges:
-        if cuts[e].x > 0.001:
-            print "edge:", e, cuts[e].x
+        x[e] = cuts[e].x
+    return x
 
-    #print "asdfdsf"
-    for e in combinations(vertices,2):
-        l = list(e); l.sort(); se = tuple(l)
-        d[se] = dist[se].x # add distance variable
-        if dist[e].x > 0.01:
-            print "dist:",e,d[e]
-    return d
     # display results
     
 #     def printSolution():

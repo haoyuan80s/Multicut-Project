@@ -28,11 +28,11 @@ def multi_cut_LP_relax(g):
     # Add constraints: WLOG source-sink pairs are (0,1),(2,3) ....
     for u,v in g.sts():
         m.addConstr( dist[frozenset([u , v])] >= 1  )
-    count = 0
+    #count = 0
     for e in combinations(vertices,3):
         l = list(e); l.sort(); u,v,w = l
-        count += 1
-        if count % 10000 == 0: print count
+        #count += 1
+        #if count % 10000 == 0: print count
         m.addConstr(dist[frozenset([u,v])] + dist[frozenset([v,w])] >= dist[frozenset([u,w])])
         m.addConstr(dist[frozenset([u,w])] + dist[frozenset([v,w])] >= dist[frozenset([u,v])])
         m.addConstr(dist[frozenset([v,u])] + dist[frozenset([u,w])] >= dist[frozenset([v,w])])
@@ -41,32 +41,7 @@ def multi_cut_LP_relax(g):
     
     m.optimize()
     
-#    for e in edges:
-#        print e, cuts[e].x
-
-#    print "asdfdsf"
-
-    d = {}
-    for e in combinations(vertices,2):
-        e = frozenset(e)
-        d[e] = dist[e].x # add distance variable
-        #if dist[e].x > 0.01:
-#        print e,d[e]
-    return d
-    # display results
-    
-#     def printSolution():
-# #        print 'Problem size: |V| = ', n, ', |E|, = ', len(edges_weights) # size of our problem
-#         if m.status == GRB.Status.OPTIMAL:
-#             print('\nCost: %g' % m.objVal)
-#             #buyx = m.getAttr('x', buy)
-#             #nutritionx = m.getAttr('x', nutrition)
-#             print('\nCut:')
-#             for e in edges:
-#     #            import pdb; pdb.set_trace()
-#                 #if cuts[e].x > 0.01 and cuts[e].x < 0.99:
-#                 print(e, cuts[e].x)
-#         else:
-#             print('No solution')
-
-#     printSolution()
+    x = {}
+    for e in edges:
+        x[e] = cuts[e].x
+    return x
