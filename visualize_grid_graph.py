@@ -6,8 +6,7 @@ def Mat2Str(M):
         S+="\n"
     return S
 
-colors_vertex = {0:'white',1:'red',2:'blue', 3:'green'}
-colors_edge = {0:'white',1:'black', 0.5:'gray'}
+colors_vertex = {0:'white',1:'red',2:'green', 3:'blue', 4:'yellow',5:'magenta', 6:'cyan'}
 
 def format_num(k):
     s = str(k)
@@ -16,9 +15,9 @@ def format_num(k):
     else:
         return s
 
-def getMessageString(G,N,cuts,BC):
-    M = [['  ']*(3*(N-1)+1) for x in xrange((3*(N-1)+1))]
-    for i in range(N):
+def getMessageString(G,N,L,cuts,BC):
+    M = [['  ']*(3*(N-1)+1) for _ in xrange((3*(L-1)+1))]
+    for i in range(L):
         for j in range(N):
             M[3*i][3*j]=  "<span class='site-"+colors_vertex[BC[i][j]]+"'> *</span>"
  
@@ -29,10 +28,17 @@ def getMessageString(G,N,cuts,BC):
         (Sx,Sy) = S
         (Tx,Ty) = T
         if Sx != -1 and Sy != -1 and Tx != -1 and Ty != -1:
-            L = round(255*(1-cuts[e])) 
-            hex_color_code = '#%02x%02x%02x' % (L,L,L)
+            C = round(255*(1-cuts[e])) 
+            hex_color_code = '#%02x%02x%02x' % (C,C,C)
             (dx,dy) = (Tx-Sx,Ty-Sy)
             (i,j)=(3*Sx+2*dx,3*Sy + 2*dy)
+            # print "===="
+            # print G.vertices()
+            # print (S,T)
+            # print len(M)
+            # print len(M[0])
+            # print i
+            # print j
             M[i][j] = "<span class='msg' style = 'background-color : " + hex_color_code + "'>  </span>"
 
             (T,S) = e
@@ -65,8 +71,8 @@ def fill(H,M):
                 M[k][l] = j
     return M
 
-def vgg(G,N,cuts,M,name):
+def vgg(G,N,L,cuts,M,name):
     """ visualizes the grid graph by printing to an HTML file called name """
-    printToHTML(getMessageString(G, N, cuts, M),name)
+    printToHTML(getMessageString(G, N, L, cuts, M),name)
     return None
 

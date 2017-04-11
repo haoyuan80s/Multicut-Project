@@ -61,7 +61,7 @@ print len(F)
 ### Output the results into the html files fractional.html and integral.html
 from visualize_grid_graph import vgg, fill 
 cuts = {e: (1 if e in F else 0) for e in G.edges()} 
-vgg(G, grid_graph.N, x, grid_graph.M,'fractional.html')
-vgg(G, grid_graph.N, cuts, fill(H,grid_graph.M),'integral.html')
+vgg(G, grid_graph.N, grid_graph.L, x, grid_graph.M,'fractional.html')
+vgg(G, grid_graph.N, grid_graph.L, cuts, fill(H,grid_graph.M),'integral.html')
 ### }
 
