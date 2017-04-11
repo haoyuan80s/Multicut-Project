@@ -26,9 +26,9 @@ def solve(G,H):
     for s,t in G.sts():
         d_s = H.dist_from(s)
         if d_s[t] < float("inf"):
-            for r in sorted(d_s.values()):
+            for r in sorted(set(d_s.values()) | {0.5}):
                 V,dB = volume(d_s,r)
-                if cost(dB) <= V*2*math.log((beta+1)/beta):
+                if cost(dB) < V*2*math.log((beta+1)/beta):
                     F = F + dB
                     H.remove_edges(dB)
                     break

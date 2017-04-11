@@ -51,14 +51,14 @@ from math import floor
 from random import random
 def make_random_M(N,L,k,p):
     M = [[0]*N for _ in xrange(L)]
-    for l in range(k):
-        i = int(floor(L*random()))
-        j = int(floor(N*random()))
-        M[i][j] = l+1
     for i in xrange(L):
         for j in xrange(N):
             if random() < p:
                 M[i][j] = int(floor(1+k*random()))
+    for l in range(k):
+        i = int(floor(L*random()))
+        j = int(floor(N*random()))
+        M[i][j] = l+1
     return M
 M = make_random_M(N,L,k,0.3)
 
