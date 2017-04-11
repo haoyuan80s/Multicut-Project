@@ -17,5 +17,5 @@ for n in [100]:
     LP_sol = LP.multi_cut_LP_relax(G)
 
     #print type(LP_sol)
-    l = list(filter(lambda x: x[1] > esp and x[1] < 1 - esp, LP_sol.items()))
-    print [Fraction(k[1]).limit_denominator(1000) for k in l]
+    print list(filter(lambda x: x[1] > esp and x[1] < 1 - esp, LP_sol.items()))
+    #print [Fraction(k[1]).limit_denominator(1000) for k in l]
