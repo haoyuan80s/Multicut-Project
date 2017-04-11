@@ -9,6 +9,13 @@ import random; random.seed(1)
 # random graph
 G = graph.Graph(n = 13, p = 0.3,st = [(0,1),(1,3)])
 
+# === grid graph with lots of fractional values ===
+# uncomment below to use
+
+# from grid_graph import G
+
+
+
 # a naive grid
 #dc = {0: [3,1],1:[2,0,4],2:[1,5],3:[0,4],4:[1,3,5],5:[2,4]}
 #G = graph.Graph(graph_dict = dc,st = [(0,1),(2,4)])
