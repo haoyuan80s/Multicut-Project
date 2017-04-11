@@ -49,20 +49,3 @@ def multi_cut_LP_relax(g):
         x[e] = cuts[e].x
     return x
 
-    # display results
-    
-#     def printSolution():
-# #        print 'Problem size: |V| = ', n, ', |E|, = ', len(edges_weights) # size of our problem
-#         if m.status == GRB.Status.OPTIMAL:
-#             print('\nCost: %g' % m.objVal)
-#             #buyx = m.getAttr('x', buy)
-#             #nutritionx = m.getAttr('x', nutrition)
-#             print('\nCut:')
-#             for e in edges:
-#     #            import pdb; pdb.set_trace()
-#                 #if cuts[e].x > 0.01 and cuts[e].x < 0.99:
-#                 print(e, cuts[e].x)
-#         else:
-#             print('No solution')
-
-#     printSolution()
