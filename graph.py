@@ -225,7 +225,6 @@ def from_csv(fname):
         for line in f:
             tokens = line.split(',')
             G.add_edge((int(tokens[0]), int(tokens[1])), float(tokens[2]))
-            print("adding (" + tokens[0] + "," + tokens[1] + ")")
     with open(fname + ".stp", 'r') as f:
         for line in f:
             tokens = line.split(',')
