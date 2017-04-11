@@ -7,7 +7,7 @@ def region_growing(G,H):
     x = H.weights()
     
     L = sum([c[e]*x[e] for e in G.edges()])
-    beta = 1.0/len(st_pairs)
+    beta = 1.0/len(G.sts())
     
     def volume(d_s,r):
         B = [v for v in G.vertices() if d_s[v] <= r]
@@ -30,7 +30,7 @@ def region_growing(G,H):
                 V,dB = volume(d_s,r)
                 if cost(dB) <= V*2*math.log((beta+1)/beta):
                     F = F + dB
-                    H.remove_edges_from(dB)
+                    H.remove_edges(dB)
                     break
     return F
 

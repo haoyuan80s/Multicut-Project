@@ -1,4 +1,4 @@
-import tools
+import graph
 from itertools import *
 
 # lattice graph in image models
@@ -10,7 +10,7 @@ from itertools import *
 
 neighbors = [(-1,1),(0,1),(1,1),(1,0)];
 def grid_graph(N):
-    G = Graph(graph_dict = {(a,b):[] for a in range(N) for b in range(N)}, n=N**2)
+    G = graph.Graph(graph_dict = {(a,b):[] for a in range(N) for b in range(N)}, n=N**2)
     for a in range(N):
         for b in range(N):
             for (c,d) in neighbors:
@@ -23,16 +23,16 @@ N = 10
 
 # the terminals are nodes of the (-1,1), (-1,2), (-1,3) ...., (-1,k)
 
-M = [[1,1,1,2,2,2,2,1,1,1],
+M = [[1,1,1,2,2,1,1,1,1,1],
      [1,0,0,0,0,0,0,0,0,1],
      [1,0,0,0,0,0,0,0,0,1],
-     [1,0,0,0,0,0,0,0,0,2],
+     [1,0,0,0,0,0,0,0,0,1],
      [1,0,0,0,0,0,0,0,0,2],
      [1,0,0,0,0,0,0,0,0,2],
      [3,0,0,0,0,0,0,0,0,2],
      [3,0,0,0,0,0,0,0,0,1],
      [3,0,0,0,0,0,0,0,0,1],
-     [3,3,3,2,2,2,2,1,1,1]]
+     [3,3,3,2,2,2,2,2,1,1]]
 
 
 # M = [[1,1,2,2,1,1,1],

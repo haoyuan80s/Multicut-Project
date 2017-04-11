@@ -7,23 +7,29 @@ import naive as na
 #import random; random.seed(1)
 import time
 # random graph
-with open("IP_solvable.txt",'w') as f:
-    times = {}
-    for i in range(16):
-        G = graph.Graph(n = i, p = 0.4,st = [(0,1),(2,3)])
-        a = time.time()
-        IP_sol = na.multi_cut_native(G)
-        b = time.time()
-        times[i] = b - a
-        f.write(str(i) + ", " + str(b - a) + "\n")
-
-    
 
 
-# === grid graph with lots of fractional values ===
-# uncomment below to use
+# small case IP: random case
+# with open("IP_solvable.txt",'w') as f:
+#     times = {}
+#     for i in range(16):
+#         G = graph.Graph(n = i, p = 0.4,st = [(0,1),(2,3)])
+#         a = time.time()
+#         IP_sol = na.multi_cut_native(G)
+#         b = time.time()
+#         times[i] = b - a
+#         f.write(str(i) + ", " + str(b - a) + "\n")
 
-# from grid_graph import G
+
+
+
+### { grid graph with lots of fractional values
+### To modify the grid graph, go to grid_graph.py for details 
+import grid_graph
+G = grid_graph.G
+x =  LP2.multi_cut_LP_relax(G)
+H = graph.copy_graph(G,x)
+### }
 
 
 
@@ -41,7 +47,19 @@ with open("IP_solvable.txt",'w') as f:
 #LP_sol1 =  LP.multi_cut_LP_relax(G)
 #print LP_sol1
 
-#print rg.region_growing(G)
+import region_growing_2 as rg
+F = rg.region_growing(G,H)
 #print na.multi_cut_native(G)
 #G.add_edge((0, 3))
 #print G
+
+
+
+### { uncomment this part for visualizing grid graph cuts 
+### Output the results into the html files fractional.html and integral.html
+from visualize_grid_graph import vgg, fill 
+cuts = {e: (1 if e in F else 0) for e in G.edges()} 
+vgg(G, grid_graph.N, x, grid_graph.M,'fractional.html')
+vgg(G, grid_graph.N, cuts, fill(H,grid_graph.M),'integral.html')
+### }
+

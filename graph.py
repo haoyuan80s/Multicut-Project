@@ -69,7 +69,7 @@ class Graph(object):
         for u,v in edges:
             self.__graph_dict[u].remove(v)
             self.__graph_dict[v].remove(u)
-            self.__weights.remove(frozenset([u,v]))
+            del self.__weights[frozenset([u,v])]
     
     def dist_from(self, u):
         """ returns a dictionary mapping vertices v to their distance d(u,v) from vertex u """
@@ -230,3 +230,12 @@ def from_csv(fname):
             tokens = line.split(',')
             G.add_st((int(tokens[0]), int(tokens[1])))
     return G
+
+def copy_graph(G,w):
+    """ creates a graph H that is identical to G except the weights in H are that of w. Requires w to be a dictionary from G.edges() to numbers """
+    from copy import deepcopy
+    H = deepcopy(G)
+    weights = H.weights() # returns a pointer to the weights dictionary!!
+    for e in G.edges():
+        weights[e] = w[e]
+    return H
