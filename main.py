@@ -49,6 +49,8 @@ H = graph.copy_graph(G,x)
 
 import region_growing_2 as rg
 F = rg.region_growing(G,H)
+print "ALG objective value: ",
+print len(F)
 #print na.multi_cut_native(G)
 #G.add_edge((0, 3))
 #print G
