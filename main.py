@@ -47,8 +47,10 @@ H = graph.copy_graph(G,x)
 #LP_sol1 =  LP.multi_cut_LP_relax(G)
 #print LP_sol1
 
-import region_growing_2 as rg
+import region_growing as rg
 F = rg.region_growing(G,H)
+print "ALG objective value: ",
+print len(F)
 #print na.multi_cut_native(G)
 #G.add_edge((0, 3))
 #print G
@@ -59,7 +61,7 @@ F = rg.region_growing(G,H)
 ### Output the results into the html files fractional.html and integral.html
 from visualize_grid_graph import vgg, fill 
 cuts = {e: (1 if e in F else 0) for e in G.edges()} 
-vgg(G, grid_graph.N, x, grid_graph.M,'fractional.html')
-vgg(G, grid_graph.N, cuts, fill(H,grid_graph.M),'integral.html')
+vgg(G, grid_graph.N, grid_graph.L, x, grid_graph.M,'fractional.html')
+vgg(G, grid_graph.N, grid_graph.L, cuts, fill(H,grid_graph.M),'integral.html')
 ### }
 

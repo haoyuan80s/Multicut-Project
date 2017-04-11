@@ -2,7 +2,7 @@ import graph
 import math
 
 # G is original graph with weights c, H is the LP solution graph with weights x*
-def region_growing(G,H):
+def solve(G,H):
     c = G.weights()
     x = H.weights()
     

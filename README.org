@@ -58,3 +58,22 @@ cf. Approx alg book section 8.3
 * TODO Large Scale Examples
 * TODO A Practical Example
 * TODO Collect Results and Plot Beautiful Figures
+
+* Results Format
+A single instance's data should be saved as a Python dictionary with the following keys/values:
+1. obj_LP: LP solution objective function
+2. obj_IP: IP solution objective function (omit if IP cannot be solved)
+3. obj_RG: Region growing objective function
+4. t_solve_LP: Time required to solve the gurobi LP
+5. t_solve_IP: Time required to solve the gurobi IP (omit of IP cannot be solved)
+6. t_RG: Time required to perform region growing
+7. n: Number of vertices in G
+8. m: Number of edges in G
+9. k: Number of s-t pairs in G
+10. type: Type of graph ('rand', 'grid', 'planar', or dataset name)
+
+Experiment 1: Solve 5 examples for each of n = [10, 20, 30, ..., 100] and k = n/5, and save the resulting 5 dictionaries in a list, and compile them in another dictionary: {10: [d1, d2, d3, d4, d5], 20: [...], ..., 100: [...]}. Pickle it to a file.
+
+Experiment 2: Solve 5 examples for each of n = 100, k = [5, 10, 15, ... 50] and save the data the same as above. Pickle it to a different file.
+
+Experiment 3: (Tentative, don't do this yet) Explore the effect of the graph density on the results.
