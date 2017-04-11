@@ -1,9 +1,13 @@
 #+TITLE: Multicut-Project                                                                                                                                                         
 * Codes:
+** visual.py
+Given a graph G, output a json file(Can be read into some software to generate graph plot)
 ** naive.py
 Implements the multi-cut IP algorithm naively.(cf. text book 8.3) 
 ** LP_relax.py
 Implements the LP relaxation with compact LP formulation.
+** LP_relax_v2.py
+The note_version LP relaxation
 ** region_growing.py
 Implements the region_growing alg as in approximation book sec 8.3
 ** main.py
