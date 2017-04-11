@@ -50,6 +50,11 @@ class Graph(object):
             self.__graph_dict[vertex1].append(vertex2)
         else:
             self.__graph_dict[vertex1] = [vertex2]
+        if vertex2 in self.__graph_dict.keys():
+            self.__graph_dict[vertex2].append(vertex1)
+        else:
+            self.__graph_dict[vertex2] = [vertex1]
+            
         if vertex2 not in self.__graph_dict.keys():
             self.__graph_dict[vertex2] = []
         self.__weights[(vertex1,vertex2)] = weight
@@ -76,6 +81,30 @@ class Graph(object):
             elif (v,u) in self.__weights.keys():
                 del self.__weights[(v,u)]
     
+    def dist_from(self, u):
+        """ returns a dictionary mapping vertices v to their distance d(u,v) from vertex u """
+        graph_dict = self.__graph_dict
+        w = self.__weights
+        
+        d = {}
+        for vtx in self.vertices():
+            d[vtx] = float("inf")
+        d[u] = 0
+        
+        unvisited = self.vertices()
+        curr = u
+        while len(unvisited) > 0:
+            print(d)
+            print(unvisited)
+            print("neighbors of " + str(curr) + ": " + str(graph_dict[curr]))
+            for v in self.__graph_dict[curr]:
+                d[v] = min(d[v], d[curr] + w[(curr,v)])
+            unvisited.remove(curr)
+            curr = None
+            for v in unvisited:
+                if curr is None or d[v] < d[curr]:
+                    curr = v
+        return d
     
     def __get_rand_weights(self):
         """Associates a random weight to each edges of a graph"""
