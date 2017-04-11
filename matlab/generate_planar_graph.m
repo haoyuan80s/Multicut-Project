@@ -1,4 +1,4 @@
-function [A,x,y] = generate_planar_graph(n, seed, fname, k)
+function [A,x,y,st] = generate_planar_graph(n, seed, fname, k)
 % GENERATE_PLANAR_GRAPH generates a random planar graph on [0,1]x[0,1] with
 % adjacency matrix A and point coordinates x(i),y(i) for i = 1...n. Uses
 % random seed and writes to 'fname.adj', 'fname.vtx', and 'fname.stp' using
