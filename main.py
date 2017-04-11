@@ -8,24 +8,22 @@ import naive as na
 import time
 # random graph
 
-# small case IP data
-with open("IP_solvable.txt",'w') as f:
-    times = {}
-    for i in range(16):
-        G = graph.Graph(n = i, p = 0.4,st = [(0,1),(2,3)])
-        a = time.time()
-        IP_sol = na.multi_cut_native(G)
-        b = time.time()
-        times[i] = b - a
-        f.write(str(i) + ", " + str(b - a) + "\n")
 
-    
-
+# small case IP: random case
+# with open("IP_solvable.txt",'w') as f:
+#     times = {}
+#     for i in range(16):
+#         G = graph.Graph(n = i, p = 0.4,st = [(0,1),(2,3)])
+#         a = time.time()
+#         IP_sol = na.multi_cut_native(G)
+#         b = time.time()
+#         times[i] = b - a
+#         f.write(str(i) + ", " + str(b - a) + "\n")
 
 # === grid graph with lots of fractional values ===
-# uncomment below to use
+#from grid_graph import G
+#print LP2.multi_cut_LP_relax(G)
 
-# from grid_graph import G
 
 
 
