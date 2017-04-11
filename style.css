@@ -1,0 +1,21 @@
+    span{border-top-style: solid;
+    border-left-style: solid;
+    border-width: 1px;}
+/* site colors are 70% */
+    span.site-red{background-color:#ff3333;}
+    span.site-yellow{background-color:#ffff33;}
+    span.site-green{background-color:#33ff33;}
+    span.site-cyan{background-color:#33ffff;}
+    span.site-blue{background-color:#3333ff;}
+    span.site-magenta{background-color:#ff33ff;}
+    span.site-white{background-color:#ffffff;}
+
+/* msg colors are 80% */
+    span.msg-red{background-color:#ff9999;}
+    span.msg-yellow{background-color:#ffff99;}
+    span.msg-green{background-color:#99ff99;}
+    span.msg-cyan{background-color:#99ffff;}
+    span.msg-blue{background-color:#9999ff;}
+    span.msg-magenta{background-color:#ff99ff;}
+    span.msg-black{background-color:#9999ff;}
+    span.msg-gray{background-color:#ff99ff;}
