@@ -45,3 +45,4 @@ def multi_cut_LP_relax(g):
     for e in edges:
         x[e] = cuts[e].x
     return x
+        
