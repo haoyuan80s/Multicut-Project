@@ -2,7 +2,7 @@ import graph
 from itertools import *
 from gurobipy import *
 
-def IP(g):
+def solve(g):
     """ 
     solve the multi_cut_LP relaxation problem, return the LP solution
     Input: graph g, and number of (s,t) pairs by convension s1 = 0, t1 = 1; s2 = 3, t2 = 4, etc...
