@@ -215,6 +215,10 @@ class Graph(object):
             f.write(vf)
         with open(fname + ".stp", 'w') as f:
             f.write(stf)
+
+    def objective(self,x):
+        c = self.weights()
+        return sum([c[e]*x[e] for e in self.edges()])
     
     
 def from_csv(fname):

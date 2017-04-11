@@ -18,7 +18,7 @@ def grid_graph(N,L):
                     G.add_edge(((a,b),(a+c,b+d)),1)
     return G
 
-k = 2 # we want k pairs of (s_i,t_i) terminals
+k = 3 # we want k pairs of (s_i,t_i) terminals
 
 # the terminals are nodes of the (-1,1), (-1,2), (-1,3) ...., (-1,k)
 
@@ -88,6 +88,23 @@ M = make_random_M(N,L,k,0.3)
 
 def random_grid_graph(N,L,k,p):
     M = make_random_M(N,L,k,p)
+    G = grid_graph(N,L)
+
+    terminals = [(-1,i) for i in range(1,k+1)]
+    for t in terminals:
+        G.add_vertex(t)
+
+    for st in combinations(terminals,2):
+        G.add_st(st)
+
+    for a in range(L):
+        for b in range(N):
+            i = M[a][b]
+            if i>0:
+                G.add_edge(((-1,i),(a,b)),2*(N-1)*(2*N-1)+1)
+    return (G,M)
+
+
 
 G = grid_graph(N,L)
 

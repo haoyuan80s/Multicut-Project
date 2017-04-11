@@ -26,7 +26,12 @@ import time
 ### { grid graph with lots of fractional values
 ### To modify the grid graph, go to grid_graph.py for details 
 import grid_graph
-G = grid_graph.G
+N = 10
+L = 11
+k = 3
+p = 0.3
+
+(G,M) = grid_graph.random_grid_graph(N,L,k,p)
 x =  LP2.multi_cut_LP_relax(G)
 H = graph.copy_graph(G,x)
 ### }
@@ -61,7 +66,7 @@ print len(F)
 ### Output the results into the html files fractional.html and integral.html
 from visualize_grid_graph import vgg, fill 
 cuts = {e: (1 if e in F else 0) for e in G.edges()} 
-vgg(G, grid_graph.N, grid_graph.L, x, grid_graph.M,'fractional.html')
-vgg(G, grid_graph.N, grid_graph.L, cuts, fill(H,grid_graph.M),'integral.html')
+vgg(G, N, L, x, M,'fractional.html')
+vgg(G, N, L, cuts, fill(H,M),'integral.html')
 ### }
 
