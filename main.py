@@ -7,6 +7,8 @@ import naive as na
 #import random; random.seed(1)
 import time
 # random graph
+
+# small case IP data
 with open("IP_solvable.txt",'w') as f:
     times = {}
     for i in range(16):
