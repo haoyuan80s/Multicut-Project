@@ -26,7 +26,6 @@ def region_growing(G,d,st_pairs):
         # check if an e is in the boundary of a set b or not
         # otherwise, return None
         (u,v) = e
-        return (u in b and v not in B) or (v in b and u not in B)
 
     def get_node_in_set(e,B):
         if is_boundary(e,B) == False:
