@@ -20,7 +20,7 @@ function [A,x,y] = generate_planar_graph(n, seed, fname, k)
         csvwrite([fname '.adj'], [i j A(idx)]);
         
         fid = fopen([fname '.vtx'], 'w');
-        fprintf(fid, '(%f,%f)\n', x, y);
+        fprintf(fid, '(%f,%f)\n', [x'; y']);
         fclose(fid);
         
         st = reshape(randperm(n,2*k), [k 2]);

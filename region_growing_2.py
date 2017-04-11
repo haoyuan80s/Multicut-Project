@@ -14,6 +14,7 @@ def region_growing(G,H):
         Bs = frozenset(B)
         dB = [e for e in H.edges() if len(e & Bs) == 1]
         inner = (lambda e : set(e & Bs).pop())  # returns endpt of e belonging to B
+        
         V = beta*L + sum([c[e]*x[e] for e in H.edges() if len(e & Bs) == 2]) \
                    + sum([c[e]*(r - d_s[inner(e)]) for e in dB])
         return (V,dB)
