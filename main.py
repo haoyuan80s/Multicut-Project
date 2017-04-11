@@ -47,7 +47,7 @@ H = graph.copy_graph(G,x)
 #LP_sol1 =  LP.multi_cut_LP_relax(G)
 #print LP_sol1
 
-import region_growing_2 as rg
+import region_growing as rg
 F = rg.region_growing(G,H)
 print "ALG objective value: ",
 print len(F)
