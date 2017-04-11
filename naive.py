@@ -43,6 +43,8 @@ def multi_cut_native(g):
     #         print('No solution')
 
     # printSolution()
-
-    return [e for e in g.edges() if cuts[e].x == 1]
+    x = {}
+    for e in edges:
+        x[e] = cuts[e].x
+    return x
     

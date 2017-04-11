@@ -4,10 +4,21 @@ import LP_relax as LP
 import LP_relax_v2 as LP2
 #import region_growing as rg
 import naive as na
-import random; random.seed(1)
-
+#import random; random.seed(1)
+import time
 # random graph
-G = graph.Graph(n = 13, p = 0.3,st = [(0,1),(1,3)])
+with open("IP_solvable.txt",'w') as f:
+    times = {}
+    for i in range(16):
+        G = graph.Graph(n = i, p = 0.4,st = [(0,1),(2,3)])
+        a = time.time()
+        IP_sol = na.multi_cut_native(G)
+        b = time.time()
+        times[i] = b - a
+        f.write(str(i) + ", " + str(b - a) + "\n")
+
+    
+
 
 # a naive grid
 #dc = {0: [3,1],1:[2,0,4],2:[1,5],3:[0,4],4:[1,3,5],5:[2,4]}
@@ -18,13 +29,11 @@ G = graph.Graph(n = 13, p = 0.3,st = [(0,1),(1,3)])
 #pickle_in = open("facebook.pickle", "rb")
 #g_dic = pickle.load(pickle_in)
 #G = graph.Graph(graph_dict = g_dic, st = [(525, 528),(526, 549)])
+#LP_sol =  LP2.multi_cut_LP_relax(G)
+#print LP_sol 
+#LP_sol1 =  LP.multi_cut_LP_relax(G)
+#print LP_sol1
 
-IP_sol = na.multi_cut_native(G)
-print IP_sol
-LP_sol =  LP2.multi_cut_LP_relax(G)
-print LP_sol 
-LP_sol1 =  LP.multi_cut_LP_relax(G)
-print LP_sol1
 #print rg.region_growing(G)
 #print na.multi_cut_native(G)
 #G.add_edge((0, 3))
