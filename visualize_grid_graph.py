@@ -6,7 +6,7 @@ def Mat2Str(M):
         S+="\n"
     return S
 
-colors_vertex = {0:'white',3:'red',2:'green', 1:'blue', 4:'yellow',5:'magenta', 6:'cyan'}
+colors_vertex = {0:'white',3:'red',2:'green', 1:'blue', 4:'yellow',5:'magenta', 6:'cyan', 7:'orange'}
 
 def format_num(k):
     s = str(k)
@@ -28,7 +28,7 @@ def getMessageString(G,N,L,cuts,BC):
         (Sx,Sy) = S
         (Tx,Ty) = T
         if Sx != -1 and Sy != -1 and Tx != -1 and Ty != -1:
-            C = round(255*(1-cuts[e])) 
+            C = round(255*(1-0.25*cuts[e])) 
             hex_color_code = '#%02x%02x%02x' % (C,C,C)
             (dx,dy) = (Tx-Sx,Ty-Sy)
             (i,j)=(3*Sx+2*dx,3*Sy + 2*dy)

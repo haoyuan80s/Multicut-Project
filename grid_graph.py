@@ -115,13 +115,22 @@ def make_random_BC(N,L,k,p):
 
     
 def random_sts(G,N,L,k):
+    M = [[0]*N for _ in xrange(L)]
     G.delete_sts()
-    for _ in range(k):
+    for l in range(1,k+1):
         a = randint(0,L-1)
         b = randint(0,N-1)
         c = randint(0,L-1)
         d = randint(0,N-1)
+        while M[a][b]!= 0 or M[c][d]!=0 or (a,b) == (c,d):
+            a = randint(0,L-1)
+            b = randint(0,N-1)
+            c = randint(0,L-1)
+            d = randint(0,N-1)
+        M[a][b] = l
+        M[c][d] = l
         G.add_st(((a,b),(c,d)))
+    return M
 
 
 def random_grid_graph(N,L,k,p,choice = "M"):

@@ -9,7 +9,7 @@
     span.site-blue{background-color:#3333ff;}
     span.site-magenta{background-color:#ff33ff;}
     span.site-white{background-color:#ffffff;}
-	span.site-orange{background-color:#f4b342;}
+
 
 /* msg colors are 80% */
     span.msg-red{background-color:#ff9999;}
