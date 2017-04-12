@@ -16,7 +16,7 @@ import pickle
 
 input = open('rand_data.pkl', 'rb')
 data_rand = pickle.load(input)
-print len(data_rand())
+print len(data_rand)
 
 # data_growing_k = {}
 # n = 70

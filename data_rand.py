@@ -8,7 +8,8 @@ import pickle
 esp = 1e-4
 
 data_rand = {}
-for n in range(10,30,10):
+for n in range(10,71,10):
+    print n
     l = []
     for repeat in range(5):
         k = n/5
@@ -17,7 +18,7 @@ for n in range(10,30,10):
             for i in range(k):
                 st.append((2*i,2*i + 1))
             return st 
-        G = graph.Graph(n = n, p = 0.3, st = get_st(n))
+        G = graph.Graph(n = n, p = 0.2, st = get_st(n))
         m = len(G.edges())
 
         t1_LP = time.time()
@@ -25,7 +26,7 @@ for n in range(10,30,10):
         t2_LP = time.time()
 
         t1_IP = time.time()
-        x_IP = LP.solve(G)
+        x_IP = None #LP.solve(G)
         t2_IP = time.time()
 
         H = graph.copy_graph(G,x_LP)
@@ -41,7 +42,7 @@ for n in range(10,30,10):
         def t_IP():
             return t2_IP - t1_IP
         def v_IP():
-            return sum([x_IP[e] for e in G.edges()])
+            return None#sum([x_IP[e] for e in G.edges()])
         def t_RG():
             return t2_RG - t1_RG
         def v_RG():
