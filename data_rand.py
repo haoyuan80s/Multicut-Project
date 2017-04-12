@@ -2,23 +2,26 @@ import graph
 import LP
 import IP_v2 as IP
 import RG
-import random; random.seed(1)
+import random; random.seed(2)
 import time
 import pickle
 esp = 1e-4
 
 data_rand = {}
 for n in range(10,71,10):
+    print "==============================================================================================================="
     print n
     l = []
     for repeat in range(5):
         k = n/5
+
         def get_st(k):
             st = []
             for i in range(k):
-                st.append((2*i,2*i + 1))
+                st.append((2*i ,2*i + 1))
             return st 
-        G = graph.Graph(n = n, p = 0.2, st = get_st(n))
+
+        G = graph.Graph(n = n, p = 0.2, st = get_st(k))
         m = len(G.edges())
 
         t1_LP = time.time()
