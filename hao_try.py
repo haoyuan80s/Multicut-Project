@@ -26,7 +26,7 @@ for p in [x*0.1+0.1 for x in range(10)]:
             for i in range(k):
                 st.append((2*i,2*i + 1))
             return st 
-        G = graph.Graph(n = n, p = 1, st = get_st(k))
+        G = graph.Graph(n = n, p = p, st = get_st(k))
         m = len(G.edges())
 
         t1_LP = time.time()
