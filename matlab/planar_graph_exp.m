@@ -10,7 +10,7 @@ for t = 1:length(n_)
     
     n = n_(t);
     k = k_(t);
-    stem = sprintf('data/n%03d_k%02d', n, k);
+    stem = sprintf('data/graphs/n%03d_k%02d', n, k);
     if ~exist(stem, 'file')
         mkdir(stem);
     end
