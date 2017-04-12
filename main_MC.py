@@ -32,8 +32,10 @@ import time
 # 
 # (G,M) = grid_graph.random_grid_graph(N,L,k,p)
 import grid_graph as gg
-N = 5
-L = 15
+import random
+random.seed(2) # makes no sense
+N = 12
+L = 7
 k = 7
 G = gg.grid_graph(N,L)
 M = gg.random_sts(G,N,L,k)
@@ -41,6 +43,9 @@ x =  LP.solve(G)
 H = graph.copy_graph(G,x)
 print "LP objective value: ",
 print G.objective(x)
+from pprint import pprint
+pprint(G.sts())
+print len(G.edges())
 ### }
 
 
@@ -59,8 +64,9 @@ print G.objective(x)
 #LP_sol1 =  LP.multi_cut_LP_relax(G)
 #print LP_sol1
 
-import RG
-F = RG.solve(G,H)
+import RG_dbg
+Fs = RG_dbg.solve(G,H)
+F = Fs[-1]
 print "ALG objective value: ",
 print len(F)
 #print na.multi_cut_native(G)
@@ -71,9 +77,13 @@ print len(F)
 
 ### { uncomment this part for visualizing grid graph cuts 
 ### Output the results into the html files fractional.html and integral.html
-from visualize_grid_graph import vgg, fill 
-cuts = {e: (1 if e in F else 0) for e in G.edges()} 
+from visualize_grid_graph import vgg, fill, vgganimate
+def getCuts(F):
+    return {e: (1 if e in F else 0) for e in G.edges()} 
 vgg(G, N, L, x, M,'fractional.html')
-vgg(G, N, L, cuts, M,'integral.html')
+
+cuts_series = map(getCuts,Fs)
+vgganimate(G,N,L,cuts_series,M,'animateRG.html')
+vgg(G, N, L, cuts_series[-1], M,'integral.html')
 ### }
 

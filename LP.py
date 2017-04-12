@@ -47,5 +47,7 @@ def solve(g):
     x = {}
     for e in edges:
         x[e] = cuts[e].x
+        if x[e] < 0:
+            x[e] = 0
     return x
 
