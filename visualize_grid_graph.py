@@ -6,7 +6,7 @@ def Mat2Str(M):
         S+="\n"
     return S
 
-colors_vertex = {0:'white',3:'red',2:'green', 1:'blue', 4:'yellow',5:'magenta', 6:'cyan'}
+colors_vertex = {0:'white',1:'red',2:'orange',3:'yellow',4:'green',5:'cyan', 6:'blue', 7:'magenta',  }
 
 def format_num(k):
     s = str(k)
@@ -28,7 +28,7 @@ def getMessageString(G,N,L,cuts,BC):
         (Sx,Sy) = S
         (Tx,Ty) = T
         if Sx != -1 and Sy != -1 and Tx != -1 and Ty != -1:
-            C = round(255*(1-cuts[e])) 
+            C = round(255*(1-0.25*cuts[e])) 
             hex_color_code = '#%02x%02x%02x' % (C,C,C)
             (dx,dy) = (Tx-Sx,Ty-Sy)
             (i,j)=(3*Sx+2*dx,3*Sy + 2*dy)
@@ -76,3 +76,33 @@ def vgg(G,N,L,cuts,M,name):
     printToHTML(getMessageString(G, N, L, cuts, M),name)
     return None
 
+def vgganimate(G,N,L,cuts_series,Msg,name):
+    M = "<head><link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"></head>"
+    S1 = """
+    <link rel="stylesheet" type="text/css" href="style.css">
+   <script type="text/javascript" src="gui.js"></script>
+    <script>
+    var MAX = """
+    S2 = """
+    </script>
+    </body>
+    <input type="button" onclick="myfirst()" value="first" />
+    <input type="button" onclick="myprev()" value="prev" />
+    <input type="button" onclick="mynext()" value="next" />
+    <input type="button" onclick="mylast()" value="last" />
+    <input type="button" onclick="autoplay()" value="autoplay" />
+    <input type="button" onclick="stopautoplay()" value="stop" />
+    """
+    M = M + S1 + str(len(cuts_series)) + S2
+
+    for i in range(len(cuts_series)):
+        cuts = cuts_series[i]
+        j = i +1
+        M = M + "<pre id=\"iter" + str(j) + "\"" + (">" if j ==1 else " style=\"display: none;\">")
+        M = M + getMessageString(G,N,L,cuts,Msg)
+        M = M + "</pre>\n"
+    M = M + "</body>"
+    f = open(name,'w')
+    f.write(M)
+    f.close()
+    return None

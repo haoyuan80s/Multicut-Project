@@ -12,10 +12,10 @@ N = 10
 
 L = 12
 
-for k in range(1,11):
+for k in range(1,13):
     res =[]
     # k = int(math.ceil(N*L*1.0/20))
-    for _ in range(5):
+    for _ in range(10):
         print "=================================="
         print k
         G = grid_graph.grid_graph(N,L)
