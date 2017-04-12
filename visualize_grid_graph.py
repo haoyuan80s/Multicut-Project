@@ -14,12 +14,35 @@ def format_num(k):
         return ' ' + s
     else:
         return s
+def rgb2hex(r,g,b):
+    return '#%02x%02x%02x' % (r,g,b)
 
-def getMessageString(G,N,L,cuts,BC):
+def rgb(minimum, maximum, value):
+    minimum, maximum = float(minimum), float(maximum)
+    x = (value-minimum) / (maximum - minimum)
+    if x >2.0/5:
+        r = 0
+        if x > 4.0/5:
+            r = int(255*(5*x-4))
+        b = int(min(255,255*(5*x-2)))
+    else:
+        b = 0
+        r = int(min(255, 255*(2-5*x)))
+    if x < 4.0/5:
+        g = int(min(255, 255*(4-5*x),255*5*x))
+    else:
+        g = 0
+    return r, g, b
+
+def getMessageString(G,N,L,k,cuts,BC):
     M = [['  ']*(3*(N-1)+1) for _ in xrange((3*(L-1)+1))]
     for i in range(L):
         for j in range(N):
-            M[3*i][3*j]=  "<span class='site-"+colors_vertex[BC[i][j]]+"'> *</span>"
+            if BC[i][j] >0:
+                r,g,b = rgb(1,k,BC[i][j])
+                M[3*i][3*j]=  "<span class='site-"+colors_vertex[BC[i][j]]+"' style='background-color " + rgb2hex(r,g,b)+"'> *</span>"
+            else:
+                M[3*i][3*j]=  "<span class='site-"+colors_vertex[BC[i][j]]+"'> *</span>"
  
     for e in G.edges():
         # s = source node
@@ -71,12 +94,14 @@ def fill(H,M):
                 M[k][l] = j
     return M
 
-def vgg(G,N,L,cuts,M,name):
+def vgg(G,N,L,k,cuts,M,name):
     """ visualizes the grid graph by printing to an HTML file called name """
-    printToHTML(getMessageString(G, N, L, cuts, M),name)
+    printToHTML(getMessageString(G, N, L,k, cuts, M),name)
     return None
 
-def vgganimate(G,N,L,cuts_series,Msg,name):
+
+
+def vgganimate(G,N,L,k,cuts_series,Msg,name):
     M = "<head><link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"></head>"
     S1 = """
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -99,7 +124,7 @@ def vgganimate(G,N,L,cuts_series,Msg,name):
         cuts = cuts_series[i]
         j = i +1
         M = M + "<pre id=\"iter" + str(j) + "\"" + (">" if j ==1 else " style=\"display: none;\">")
-        M = M + getMessageString(G,N,L,cuts,Msg)
+        M = M + getMessageString(G,N,L,k,cuts,Msg)
         M = M + "</pre>\n"
     M = M + "</body>"
     f = open(name,'w')

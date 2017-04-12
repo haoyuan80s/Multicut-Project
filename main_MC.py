@@ -36,7 +36,7 @@ import random
 random.seed(2) # makes no sense
 N = 12
 L = 7
-k = 7
+k = 12
 G = gg.grid_graph(N,L)
 M = gg.random_sts(G,N,L,k)
 x =  LP.solve(G)
@@ -80,10 +80,10 @@ print len(F)
 from visualize_grid_graph import vgg, fill, vgganimate
 def getCuts(F):
     return {e: (1 if e in F else 0) for e in G.edges()} 
-vgg(G, N, L, x, M,'fractional.html')
+vgg(G, N, L,k, x, M,'fractional.html')
 
 cuts_series = map(getCuts,Fs)
-vgganimate(G,N,L,cuts_series,M,'animateRG.html')
-vgg(G, N, L, cuts_series[-1], M,'integral.html')
+vgganimate(G,N,L,k,cuts_series,M,'animateRG.html')
+vgg(G, N, L,k, cuts_series[-1], M,'integral.html')
 ### }
 

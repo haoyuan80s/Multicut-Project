@@ -10,19 +10,18 @@ runs = {}
 
 N = 10
 
-p= 0.45
 L = 12
 
-k=2
-G = grid_graph.random_grid_graph(N,L,k,p)
-for L in range(3,15):
+for k in range(1,15):
     res =[]
-    k = int(math.ceil(N*L*1.0/20))
-    for _ in range(5):
+    # k = int(math.ceil(N*L*1.0/20))
+    for _ in range(10):
         print "=================================="
-        del G
-        (G,_) = grid_graph.random_grid_graph(N,L,k,p)
-        print G.vertices()
+        print k
+        G = grid_graph.grid_graph(N,L)
+        grid_graph.random_sts(G,N,L,k)
+
+        print G.sts()
 
         # G = graph.Graph(n=60,p=0.3, st = [(0,1),(2,3),(4,5)])
         start = time.time()
@@ -66,9 +65,9 @@ for L in range(3,15):
             'm': len(G.edges()),
             'k': k, 
             'type': 'grid'})
-    runs[N*L] = res
+    runs[k] = res
 
-pickle.dump(runs, open("data/grid/grid_graph_experiment1.pickle",'wb'))
+pickle.dump(runs, open("data/grid/grid_graph_experiment2.pickle",'wb'))
 
 ### { uncomment this part for visualizing grid graph cuts 
 ### Output the results into the html files fractional.html and integral.html
