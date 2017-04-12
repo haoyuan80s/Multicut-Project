@@ -16,10 +16,11 @@ esp = 1e-4
 data_p = {}
 n = 50
 k = n / 2
-for p in [x*0.05 for x in range(20)]:
+for p in [x*0.1+0.1 for x in range(10)]:
+    print '=========================================================================================================================================================='
     print p
     l = []
-    for _ in range(5):
+    for _ in range(3):
         def get_st(k):
             st = []
             for i in range(k):
@@ -53,8 +54,9 @@ for p in [x*0.05 for x in range(20)]:
         l.append({"obj_LP":v_LP(),"obj_RG":v_RG(),
           "t_solve_LP": t_LP(), "t_solve_RG": t_RG(), 
           'n': n, 'm': m, "k": k, 'type': 'rand'})
-        
-output = open('data/data_p.pkl', 'wb')
+    data_p[p] = l
+
+output = open('data/rand/data_p.pkl', 'wb')
 pickle.dump(data_p, output)
 output.close()
 
