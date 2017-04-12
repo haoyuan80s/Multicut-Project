@@ -85,9 +85,33 @@ M = make_random_M(N,L,k,0.3)
 # 
 
 
+def make_random_BC(N,L,k,p):
+    M = [[0]*N for _ in xrange(L)]
+    P = [(0,j) for j in range(N)] \
+            + [(i,N-1) for i in range(1,L)] \
+            + [(L-1,N-1-j) for j in range(1,N)]\
+            + [(L-1-i,0) for i in range(1,L-1)]
+    
+    l = int(floor(1+k*random()))
+    ls = [l]
+    while len(set(ls))!=k:
+        l = int(floor(1+k*random()))
+        ls = [l]
+        for (i,j) in P:
+            if random()<p:
+                l = int(floor(1+k*random()))
+                ls.append(l)
+            M[i][j] = l
+    return M
 
-def random_grid_graph(N,L,k,p):
-    M = make_random_M(N,L,k,p)
+
+    
+
+def random_grid_graph(N,L,k,p,choice = "M"):
+    if choice == "M":
+        M = make_random_M(N,L,k,p)
+    else:
+        M = make_random_BC(N,L,k,p)
     G = grid_graph(N,L)
 
     terminals = [(-1,i) for i in range(1,k+1)]
