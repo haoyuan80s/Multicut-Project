@@ -62,6 +62,10 @@ class Graph(object):
             self.add_vertex(st[1])
         self.__st.append(st)
 
+    def delete_sts(self):
+        self.__st = []
+
+
     def remove_edges(self, edges):
         """ assumes that edge is of type set, tuple or list; 
             between two vertices can be multiple edges! 

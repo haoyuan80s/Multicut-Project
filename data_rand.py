@@ -13,7 +13,7 @@ for n in range(10,71,10):
     l = []
     for repeat in range(5):
         k = n/5
-        def get_st(n):
+        def get_st(k):
             st = []
             for i in range(k):
                 st.append((2*i,2*i + 1))
@@ -48,10 +48,10 @@ for n in range(10,71,10):
         def v_RG():
             return len(F_RG)
         l.append({"obj_LP":v_LP(),"obj_IP":v_IP(),"obj_RG":v_RG(),
-                  "t_solve_LP": t_LP(),"t_solve_IP": t_IP(), "t_solve:RG": t_RG(), 
+                  "t_solve_LP": t_LP(),"t_solve_IP": t_IP(), "t_solve_RG": t_RG(), 
                   'n': n, 'm': m, "k": k, 'type': 'rand'})
     data_rand[n] = l
 
-output = open('rand_data.pkl', 'wb')
+output = open('data/rand/rand_data1.pkl', 'wb')
 pickle.dump(data_rand, output)
 output.close()

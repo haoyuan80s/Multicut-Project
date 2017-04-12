@@ -18,13 +18,13 @@ def grid_graph(N,L):
                     G.add_edge(((a,b),(a+c,b+d)),1)
     return G
 
-k = 3 # we want k pairs of (s_i,t_i) terminals
+# k = 3 # we want k pairs of (s_i,t_i) terminals
 
 # the terminals are nodes of the (-1,1), (-1,2), (-1,3) ...., (-1,k)
 
 # when you change the size of M, you must also update N to be sqrt(len(M))
-N = 10
-L = 13
+# N = 10
+# L = 13
 # M = [[1,1,1,1,1,1,1,1,1,1],
 #      [1,0,0,0,0,0,0,0,0,1],
 #      [1,0,0,0,0,0,0,0,0,1],
@@ -48,7 +48,7 @@ L = 13
 #      [2,2,2,2,3,3,3,3,3,3]]
 
 from math import floor
-from random import random
+from random import random, randint
 def make_random_M(N,L,k,p):
     M = [[0]*N for _ in xrange(L)]
     for i in xrange(L):
@@ -60,27 +60,27 @@ def make_random_M(N,L,k,p):
         j = int(floor(N*random()))
         M[i][j] = l+1
     return M
-M = make_random_M(N,L,k,0.3)
-N = 10
-L = 10
+# M = make_random_M(N,L,k,0.3)
+# N = 10
+# L = 10
 
 # a highly fractional example
-M = [[1,1,1,1,1,1,1,1,1,1],
-     [1,0,0,0,0,0,0,0,0,1],
-     [1,0,0,0,0,0,0,0,0,1],
-     [1,0,0,0,0,0,0,0,0,1],
-     [1,0,0,0,0,0,0,0,0,2],
-     [1,0,0,0,0,0,0,0,0,2],
-     [3,0,0,0,0,0,0,0,0,2],
-     [3,0,0,0,0,0,0,0,0,2],
-     [3,0,0,0,0,0,0,0,0,2],
-     [3,3,3,3,2,2,2,2,2,2]]
-for i in range(L):
-    for j in range(N):
-        if M[i][j]==1:
-            M[i][j]=3
-        elif M[i][j]==3:
-            M[i][j]=1
+# M = [[1,1,1,1,1,1,1,1,1,1],
+#      [1,0,0,0,0,0,0,0,0,1],
+#      [1,0,0,0,0,0,0,0,0,1],
+#      [1,0,0,0,0,0,0,0,0,1],
+#      [1,0,0,0,0,0,0,0,0,2],
+#      [1,0,0,0,0,0,0,0,0,2],
+#      [3,0,0,0,0,0,0,0,0,2],
+#      [3,0,0,0,0,0,0,0,0,2],
+#      [3,0,0,0,0,0,0,0,0,2],
+#      [3,3,3,3,2,2,2,2,2,2]]
+# for i in range(L):
+#     for j in range(N):
+#         if M[i][j]==1:
+#             M[i][j]=3
+#         elif M[i][j]==3:
+#             M[i][j]=1
 
 
 # M = [[1,1,2,2,1,1,1],
@@ -114,6 +114,15 @@ def make_random_BC(N,L,k,p):
 
 
     
+def random_sts(G,N,L,k):
+    G.delete_sts()
+    for _ in range(k):
+        a = randint(0,L-1)
+        b = randint(0,N-1)
+        c = randint(0,L-1)
+        d = randint(0,N-1)
+        G.add_st(((a,b),(c,d)))
+
 
 def random_grid_graph(N,L,k,p,choice = "M"):
     if choice == "M":
@@ -137,26 +146,26 @@ def random_grid_graph(N,L,k,p,choice = "M"):
     return (G,M)
 
 
-
-G = grid_graph(N,L)
-
-# print sorted(G.vertices())
-# print len(G.vertices())
-
-terminals = [(-1,i) for i in range(1,k+1)]
-
-for t in terminals:
-    G.add_vertex(t)
-
-for st in combinations(terminals,2):
-    G.add_st(st)
-
-for a in range(L):
-    for b in range(N):
-        i = M[a][b]
-        if i>0:
-            G.add_edge(((-1,i),(a,b)),2*(N-1)*(2*N-1)+1)
-
-n = N**2
-p = 2*(N-1)*(2*N+1)
-
+# 
+# G = grid_graph(N,L)
+# 
+# # print sorted(G.vertices())
+# # print len(G.vertices())
+# 
+# terminals = [(-1,i) for i in range(1,k+1)]
+# 
+# for t in terminals:
+#     G.add_vertex(t)
+# 
+# for st in combinations(terminals,2):
+#     G.add_st(st)
+# 
+# for a in range(L):
+#     for b in range(N):
+#         i = M[a][b]
+#         if i>0:
+#             G.add_edge(((-1,i),(a,b)),2*(N-1)*(2*N-1)+1)
+# 
+# n = N**2
+# p = 2*(N-1)*(2*N+1)
+# 
