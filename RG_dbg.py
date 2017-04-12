@@ -1,5 +1,6 @@
 import graph
 import math
+from copy import deepcopy
 
 # G is original graph with weights c, H is the LP solution graph with weights x*
 def solve(G,H):
@@ -23,6 +24,7 @@ def solve(G,H):
         return sum([c[e] for e in S])
     
     F = []
+    Fs = [[]]
     for s,t in G.sts():
         d_s = H.dist_from(s)
         if d_s[t] < float("inf"):
@@ -30,7 +32,8 @@ def solve(G,H):
                 V,dB = volume(d_s,r)
                 if cost(dB) < V*2*math.log((beta+1)/beta):
                     F = F + dB
+                    Fs.append(F)
                     H.remove_edges(dB)
                     break
-    return F
+    return Fs
 

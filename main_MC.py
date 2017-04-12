@@ -1,7 +1,6 @@
 #import pickle
 import graph
-import LP_relax as LP
-import LP_relax_v2 as LP2
+import LP
 #import region_growing as rg
 import naive as na
 #import random; random.seed(1)
@@ -32,10 +31,19 @@ import time
 # p = 0.3
 # 
 # (G,M) = grid_graph.random_grid_graph(N,L,k,p)
-from grid_graph import *
 
-x =  LP2.multi_cut_LP_relax(G)
+import grid_graph as gg
+import random
+random.seed(1)
+N = 12
+L = 10
+k = 15
+G = gg.grid_graph(N,L)
+M = gg.random_sts(G,N,L,k)
+x =  LP.solve(G)
 H = graph.copy_graph(G,x)
+print "LP objective value: ",
+print G.objective(x)
 ### }
 
 
@@ -54,10 +62,13 @@ H = graph.copy_graph(G,x)
 #LP_sol1 =  LP.multi_cut_LP_relax(G)
 #print LP_sol1
 
-import RG
-F = RG.solve(G,H)
+import RG_dbg
+Fs = RG_dbg.solve(G,H)
+F = Fs[-1]
 print "ALG objective value: ",
 print len(F)
+print "number of steps: ",
+
 #print na.multi_cut_native(G)
 #G.add_edge((0, 3))
 #print G
@@ -66,9 +77,13 @@ print len(F)
 
 ### { uncomment this part for visualizing grid graph cuts 
 ### Output the results into the html files fractional.html and integral.html
-from visualize_grid_graph import vgg, fill 
-cuts = {e: (1 if e in F else 0) for e in G.edges()} 
-vgg(G, N, L, x, M,'fractional.html')
-vgg(G, N, L, cuts, fill(H,M),'integral.html')
+from visualize_grid_graph import vgg, fill, vgganimate
+def getCuts(F):
+    return {e: (1 if e in F else 0) for e in G.edges()} 
+vgg(G, N, L,k, x, M,'fractional.html')
+
+cuts_series = map(getCuts,Fs)
+vgganimate(G,N,L,k,cuts_series,M,'animateRG.html')
+vgg(G, N, L,k, cuts_series[-1], M,'integral.html')
 ### }
 

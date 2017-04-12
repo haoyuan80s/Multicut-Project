@@ -18,7 +18,7 @@ var simulation = d3.forceSimulation()
 	   })
 );
 
-d3.json("g.json200", function(error, json) {
+d3.json("g.json50", function(error, json) {
     if (error) throw error;
 
     var refreshGraph = function() {

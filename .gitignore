@@ -5,4 +5,4 @@
 *.vtx
 *.stp
 *.swp
-data/*
+data/graphs

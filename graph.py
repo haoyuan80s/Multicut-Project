@@ -62,6 +62,10 @@ class Graph(object):
             self.add_vertex(st[1])
         self.__st.append(st)
 
+    def delete_sts(self):
+        self.__st = []
+
+
     def remove_edges(self, edges):
         """ assumes that edge is of type set, tuple or list; 
             between two vertices can be multiple edges! 
@@ -215,6 +219,10 @@ class Graph(object):
             f.write(vf)
         with open(fname + ".stp", 'w') as f:
             f.write(stf)
+
+    def objective(self,x):
+        c = self.weights()
+        return sum([c[e]*x[e] for e in self.edges()])
     
     
 def from_csv(fname):
