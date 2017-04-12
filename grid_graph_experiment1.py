@@ -5,25 +5,29 @@ import RG
 import IP_v2 as IP
 import grid_graph
 import time
+import math
 runs = {}
 
 N = 10
-k = 4
-p = 0.45
 
+L = 12
 
-for L in range(10,21):
+for k in range(1,11):
     res =[]
+    # k = int(math.ceil(N*L*1.0/20))
     for _ in range(5):
         print "=================================="
-        print L
-        (G,M) = grid_graph.random_grid_graph(N,L,k,p)
+        print k
+        G = grid_graph.grid_graph(N,L)
+        grid_graph.random_sts(G,N,L,k)
+
+        print G.sts()
 
         # G = graph.Graph(n=60,p=0.3, st = [(0,1),(2,3),(4,5)])
         start = time.time()
         x_LP =  LP.solve(G)
         end = time.time()
-        t_solve_LP = start-end
+        t_solve_LP = end-start
 
         OPT_LP =  G.objective(x_LP)
         H = graph.copy_graph(G,x_LP)
@@ -39,7 +43,7 @@ for L in range(10,21):
         start = time.time()
         F = RG.solve(G,H)
         end=time.time()
-        t_RG = start - end
+        t_RG = end-start
 
         ALG = len(F)
 
@@ -61,9 +65,9 @@ for L in range(10,21):
             'm': len(G.edges()),
             'k': k, 
             'type': 'grid'})
-    runs[N*L] = res
+    runs[k] = res
 
-pickle.dump(runs, open("data/grid_graph_experiment1.pickle",'wb'))
+pickle.dump(runs, open("data/grid/grid_graph_experiment2.pickle",'wb'))
 
 ### { uncomment this part for visualizing grid graph cuts 
 ### Output the results into the html files fractional.html and integral.html

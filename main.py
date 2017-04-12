@@ -25,13 +25,15 @@ import time
 
 ### { grid graph with lots of fractional values
 ### To modify the grid graph, go to grid_graph.py for details 
-import grid_graph
-N = 10
-L = 11
-k = 3
-p = 0.3
+# import grid_graph
+# N = 10
+# L = 11
+# k = 3
+# p = 0.3
+# 
+# (G,M) = grid_graph.random_grid_graph(N,L,k,p)
+from grid_graph import *
 
-(G,M) = grid_graph.random_grid_graph(N,L,k,p)
 x =  LP2.multi_cut_LP_relax(G)
 H = graph.copy_graph(G,x)
 ### }
@@ -52,8 +54,8 @@ H = graph.copy_graph(G,x)
 #LP_sol1 =  LP.multi_cut_LP_relax(G)
 #print LP_sol1
 
-import region_growing as rg
-F = rg.region_growing(G,H)
+import RG
+F = RG.solve(G,H)
 print "ALG objective value: ",
 print len(F)
 #print na.multi_cut_native(G)

@@ -6,7 +6,7 @@ def Mat2Str(M):
         S+="\n"
     return S
 
-colors_vertex = {0:'white',1:'red',2:'green', 3:'blue', 4:'yellow',5:'magenta', 6:'cyan'}
+colors_vertex = {0:'white',3:'red',2:'green', 1:'blue', 4:'yellow',5:'magenta', 6:'cyan'}
 
 def format_num(k):
     s = str(k)
