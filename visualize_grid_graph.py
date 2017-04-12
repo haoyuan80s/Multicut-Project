@@ -34,15 +34,25 @@ def rgb(minimum, maximum, value):
         g = 0
     return r, g, b
 
+def makeStr(l):
+    if l <= 9:
+        return " " + str(l)
+    return str(l)
+
 def getMessageString(G,N,L,k,cuts,BC):
     M = [['  ']*(3*(N-1)+1) for _ in xrange((3*(L-1)+1))]
     for i in range(L):
         for j in range(N):
-            if BC[i][j] >0:
-                r,g,b = rgb(1,k,BC[i][j])
-                M[3*i][3*j]=  "<span class='site-"+colors_vertex[BC[i][j]]+"' style='background-color " + rgb2hex(r,g,b)+"'> *</span>"
+            l = BC[i][j]
+            if l >0:
+                r,g,b = rgb(1,k,l)
+                x = (l-1)*1.0/(k-1)
+                if x > 1.0/10 and x < 7.0/10:
+                    M[3*i][3*j]=  "<span style='font-weight: bold;background-color: " + rgb2hex(r,g,b)+"'>" + makeStr(l)+"</span>"
+                else:
+                    M[3*i][3*j]=  "<span style='font-weight: bold;border-color:black;color:white;background-color: " + rgb2hex(r,g,b)+"'>" + makeStr(l)+"</span>"
             else:
-                M[3*i][3*j]=  "<span class='site-"+colors_vertex[BC[i][j]]+"'> *</span>"
+                M[3*i][3*j]=  "<span class='site-"+colors_vertex[l]+"'> *</span>"
  
     for e in G.edges():
         # s = source node
@@ -51,7 +61,7 @@ def getMessageString(G,N,L,k,cuts,BC):
         (Sx,Sy) = S
         (Tx,Ty) = T
         if Sx != -1 and Sy != -1 and Tx != -1 and Ty != -1:
-            C = round(255*(1-0.25*cuts[e])) 
+            C = round(255*(1-cuts[e])) 
             hex_color_code = '#%02x%02x%02x' % (C,C,C)
             (dx,dy) = (Tx-Sx,Ty-Sy)
             (i,j)=(3*Sx+2*dx,3*Sy + 2*dy)
