@@ -31,21 +31,19 @@ import time
 # p = 0.3
 # 
 # (G,M) = grid_graph.random_grid_graph(N,L,k,p)
+
 import grid_graph as gg
 import random
-random.seed(2) # makes no sense
+random.seed(1)
 N = 12
-L = 7
-k = 12
+L = 10
+k = 15
 G = gg.grid_graph(N,L)
 M = gg.random_sts(G,N,L,k)
 x =  LP.solve(G)
 H = graph.copy_graph(G,x)
 print "LP objective value: ",
 print G.objective(x)
-from pprint import pprint
-pprint(G.sts())
-print len(G.edges())
 ### }
 
 
@@ -69,6 +67,8 @@ Fs = RG_dbg.solve(G,H)
 F = Fs[-1]
 print "ALG objective value: ",
 print len(F)
+print "number of steps: ",
+
 #print na.multi_cut_native(G)
 #G.add_edge((0, 3))
 #print G
