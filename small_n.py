@@ -46,7 +46,7 @@ for L in range(5,20,3):
         res.append({
             'time_LP': t2 - t1,
             'time_IP': t3 - t2,
-            'time_RG': t4 - 43,
+            'time_RG': t4 - t3,
             'obj_LP':OPT_LP, 
             'obj_IP':OPT_IP,
             'obj_RG': ALG, 
