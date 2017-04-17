@@ -15,18 +15,23 @@ p = 0.45
 for L in range(5,20,3):
     res =[]
     for _ in range(5):
-        print "=================================="
+        print "================================================"
         print L
         (G,M) = grid_graph.random_grid_graph(N,L,k,p)
+        t1 = time.time()
         x_LP =  LP.solve(G)
         OPT_LP =  G.objective(x_LP)
+        
         H = graph.copy_graph(G,x_LP)
-
+        t2 = time.time()
         x_IP = IP.solve(G)
+        
         OPT_IP = G.objective(x_IP)
+        t3 = time.time()
 
         F = RG.solve(G,H)
         ALG = len(F)
+        t4 = time.time()
 
 
 
@@ -38,7 +43,11 @@ for L in range(5,20,3):
         # 
         #print "ALG objective value: ",
         #print ALG
-        res.append({'obj_LP':OPT_LP, 
+        res.append({
+            'time_LP': t2 - t1,
+            'time_IP': t3 - t2,
+            'time_RG': t4 - 43,
+            'obj_LP':OPT_LP, 
             'obj_IP':OPT_IP,
             'obj_RG': ALG, 
             'n': len(G.vertices()), 
